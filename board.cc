@@ -28,7 +28,9 @@ void Board::init() {
 
   // add observers?
   td = new TextDisplay(n);
-  // need to attach as observers
+  // need to attach as observers 
+  // helloo
+  
   
 }
 
