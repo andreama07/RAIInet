@@ -3,18 +3,19 @@
 
 #include "Link.h"
 #include <vector>
-#include <utility> // For std::pair
 
-class GameBoard {
+class Board {
     std::vector<std::vector<Link*>> board; // 2D grid of pointers to Link objects
-
+    boardSize = 8;
     // Helper method
     bool isWithinBounds(int x, int y) const;
     
 public:
-    GameBoard();
+    Board();
+    ~Board();
 
     // Methods for setting up and managing the board
+    void init();
     void placeLink(int x, int y, Link& link);
     bool moveLink(int startX, int startY, int endX, int endY);
     Link* getLinkAt(int x, int y);
@@ -25,6 +26,8 @@ public:
     bool isValidPosition(int x, int y) const;
 
     // Other methods related to board management
+    
+    friend std::ostream &operator<<(std::ostream &out, const Grid &g);
 
 };
 
