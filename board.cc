@@ -48,6 +48,7 @@ void Board::placeLink(int x, int y, Link& link) {
 
 bool Board::moveLink(int startX, int startY, int endX, int endY, string dir) {
   // Check if both start and end positions are within bounds
+  
   if (dir == "up") {
     endY++;
   } else if (dir == "down") {
@@ -56,6 +57,18 @@ bool Board::moveLink(int startX, int startY, int endX, int endY, string dir) {
     endX--;
   } else if (dir == "right") {
     endX++;
+  }
+
+  int endY;
+  int endX;
+  if (dir == "up") {
+    endY = startY++;
+  } else if (dir == "down") {
+    endY = startY--;
+  } else if (dir == "left") {
+    endX = endX--;
+  } else if (dir == "right") {
+    endX = endX++;
   }
 
   if (!isValidPosition(startX, startY) || !isValidPosition(endX, endY)) {
