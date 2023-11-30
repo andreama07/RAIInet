@@ -4,6 +4,7 @@
 class Firewall {
     int xcoord;
     int ycoord;
+    
 
 public:
     Firewall();

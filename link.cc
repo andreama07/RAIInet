@@ -6,4 +6,3 @@ Link::Link() {}
 
 Link::~Link() {}
 
-
