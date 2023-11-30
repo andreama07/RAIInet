@@ -46,31 +46,25 @@ void Board::placeLink(int x, int y, Link& link) {
   return true; 
 }
 
-bool Board::moveLink(int startX, int startY, int endX, int endY, string dir) {
-  // Check if both start and end positions are within bounds
-  
-  if (dir == "up") {
-    endY++;
-  } else if (dir == "down") {
-    endY--;
-  } else if (dir == "left") {
-    endX--;
-  } else if (dir == "right") {
-    endX++;
-  }
+bool Board::moveLink(int startX, int startY, std::string dir) { // we are going to assume that the user is going to write up, down... or are we going by north, south...
+  int endY = startY; 
+  int endX = startX;
 
-  int endY;
-  int endX;
-  if (dir == "up") {
-    endY = startY++;
-  } else if (dir == "down") {
-    endY = startY--;
-  } else if (dir == "left") {
-    endX = endX--;
-  } else if (dir == "right") {
-    endX = endX++;
-  }
 
+  if (dir == "up") {
+    --endY; // prefix modifies the value immediately
+  } else if (dir == "down") {
+    ++endY;
+  } else if (dir == "left") {
+    --endX;
+  } else if (dir == "right") {
+    ++endX;
+  } else {
+    return false;
+  } 
+
+
+// Check if both start and end positions are within bounds
   if (!isValidPosition(startX, startY) || !isValidPosition(endX, endY)) {
     return false; // position not valid
   }

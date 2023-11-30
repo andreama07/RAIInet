@@ -2,6 +2,7 @@
 #define __BOARD_H__
 
 #include "Link.h"
+//#include "Direction"
 #include <vector>
 
 
