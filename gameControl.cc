@@ -1,11 +1,12 @@
 #include <gameControl.h>
+#include <board.h>
 
 gameControl::gameControl() {}
 
 gameControl::~gameControl() {}
 
     // put this in a function??
-
+    Board b;
   // interactions
     while (true) {
         cin >> command;
@@ -16,6 +17,8 @@ gameControl::~gameControl() {}
             cin >> pLink;
             string dir;
             cin >> dir;
+            // fill with end and start positions
+            b.moveLink( .., .., .., .., dir);
             // move such link in said direction
             // implement 
             //redraw graph in text and graphics
@@ -35,8 +38,13 @@ gameControl::~gameControl() {}
             // display board
         }
         else if(command == "sequence") {
-            string f;
-            cin >> f;
+            string fName;
+            cin >> fName;
+            ifstream f{fName};
+            string command;
+            while (f >> s) {
+                // execute each s here
+            } 
             // execute the sequence of commands found in file
         }
         // or if EOF

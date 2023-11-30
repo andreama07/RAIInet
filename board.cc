@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include "board.h"
 using namespace std;
 
@@ -45,8 +46,18 @@ void Board::placeLink(int x, int y, Link& link) {
   return true; 
 }
 
-bool Board::moveLink(int startX, int startY, int endX, int endY) {
+bool Board::moveLink(int startX, int startY, int endX, int endY, string dir) {
   // Check if both start and end positions are within bounds
+  if (dir == "up") {
+    endY++;
+  } else if (dir == "down") {
+    endY--;
+  } else if (dir == "left") {
+    endX--;
+  } else if (dir == "right") {
+    endX++;
+  }
+
   if (!isValidPosition(startX, startY) || !isValidPosition(endX, endY)) {
     return false; // position not valid
   }
