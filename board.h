@@ -8,8 +8,7 @@
 
 class Board {
     std::vector<std::vector<Link*>> board; // 2D grid of pointers to Link objects
-    std::vector<std::vector<bool>> firewalls; // 2D vector of booleans, true means that there is 
-                                            // a firewall
+    std::vector<std::vector<Firewall> firewalls; // 2D vector of Firewalls
     int boardSize = 8; 
     // Helper method
     bool isWithinBounds(int x, int y) const;
@@ -24,8 +23,10 @@ public:
     bool moveLink(int startX, int startY, int endX, int endY, string dir);
     Link* getLinkAt(int x, int y);
     void removeLink(int x, int y); // downloading is basically removing it, and just updating the download section
-    void activateFirewall(int x, int y);
-    bool isFirewall(int x, int y); 
+    void activateFirewall(int x, int y, int playerNumber);
+    bool isFirewall(int x, int y) const;
+    int firewallPlayer(int x, int y) const;
+
 
     // Utility methods for checking board state
     bool isSquareOccupied(int x, int y) const;

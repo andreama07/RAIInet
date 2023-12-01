@@ -33,7 +33,7 @@ void Board::init() { // might not actually need this
   
 }
 
-void Board::placeLink(int x, int y, Link& link) {
+bool Board::placeLink(int x, int y, Link& link) {
   if (!isWithinBounds(x, y)) {
     return false; // out of bounds, might not be able to use placeLink when working with the download fucntion
   }
@@ -84,7 +84,7 @@ bool Board::moveLink(int startX, int startY, std::string dir) { // we are going 
   board[endX][endY] = board[startX][startY];
   board[startX][startY] = nullptr;
   return true;
-}
+} 
 
 Link* Board::getLinkAt(int x, int y) {
   if (isWithinBounds(x, y)) {
@@ -95,18 +95,18 @@ Link* Board::getLinkAt(int x, int y) {
 
 void Board::removeLink(int x, int y) {
   if (isWithinBounds(x, y)) {
-    return board[x][y] = nullptr; 
+    board[x][y] = nullptr; 
   }
 }
 
-void Board::activateFirewall(int x, int y) {
+void Board::activateFirewall(int x, int y, int playerNumber) {
   if (isWithinBounds(x,y)) {
-    firewalls[x][y] = true;
+    firewall[x][y] = std::make_unique<Firewall>(x, y, playerNumber);
   }
 }
 
 bool Board::isFirewall(int x, int y) {
-  if (isWithinBounds) {
+  if (isWithinBounds(x, y)) {
     return firewalls[x][y];
   }
   return false;
