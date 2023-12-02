@@ -5,6 +5,7 @@ class gameControl {
 public:
     gameControl();
     ~gameControl();
+    void Interact();
 };
 
 #endif

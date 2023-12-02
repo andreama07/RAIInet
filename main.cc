@@ -19,10 +19,42 @@ int main () {
             // give player 5 abilities with their first letter caps
             // ex LFDSP
             // if not specified, use the default 5 powerups
+            for (int i = 0; i < 5; i++){
+                if (abilities[i] == "L") {
+                    // they have a Link ability
+                } else if (abilities[i] == "F") {
+                    // have firewall ability
+                } else if (abilities[i] == "D") {
+                    // have download ability
+                } else if (abilities[i] == "S") {
+                    // have scan ability
+                } else if (abilities[i] == "P") {
+                    // have polarize ability
+                } else {
+                    // send the default abilities
+                    break;
+                    
+                }
+            }
         } else if (init == "-ability2") {
             string abilities;
             cin >> abilities;
             // same as above but for player 2
+            for (int i = 0; i < 5; i++){
+                if (abilities[i] == "L") {
+                    // they have a Link ability
+                } else if (abilities[i] == "F") {
+                    // have firewall ability
+                } else if (abilities[i] == "D") {
+                    // have download ability
+                } else if (abilities[i] == "S") {
+                    // have scan ability
+                } else if (abilities[i] == "P") {
+                    // have polarize ability
+                } else {
+                    // send the default abilities
+                    break; 
+                }
         } else if (init == "-link1") {
             string f;
             cin >> f;
@@ -36,44 +68,8 @@ int main () {
             // enable graphical interface
         }
     }
+    GameControl::Interactions();
 
+   
 
-    // interactions
-    while (true) {
-        cin >> command;
-        if (command == "move") {
-            // make sure the next is a calid link for the player
-            // implement
-            string pLink;
-            cin >> pLink;
-            string dir;
-            cin >> dir;
-            // move such link in said direction
-            // implement 
-            //redraw graph in text and graphics
-            // for the graphic redraw, redraw as little as possible
-        }
-        else if (command == "abilities") {
-            // display all abilities player has with an ID 1-5
-            // make an indication whether it was used or not
-        }
-        else if (command == "ability") {
-            int n;
-            cin >> n;
-            // uses ability with ID n 
-            // depending on ability, require further input
-        }
-        else if (command == "board") {
-            // display board
-        }
-        else if(command == "sequence") {
-            string f;
-            cin >> f;
-            // execute the sequence of commands found in file
-        }
-        // or if EOF
-        else if (command == "quit") {
-            // exit game
-        }
-    }
 }

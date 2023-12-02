@@ -8,6 +8,7 @@ gameControl::~gameControl() {}
     // put this in a function??
     Board b;
   // interactions
+void Interact() {
     while (true) {
         cin >> command;
         if (command == "move") {
@@ -18,7 +19,7 @@ gameControl::~gameControl() {}
             string dir;
             cin >> dir;
             // fill with end and start positions
-            b.moveLink( .., .., .., .., dir);
+            b.moveLink( .., .., dir);
             // move such link in said direction
             // implement 
             //redraw graph in text and graphics
