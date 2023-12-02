@@ -19,7 +19,9 @@ void Interact() {
             string dir;
             cin >> dir;
             // fill with end and start positions
-            b.moveLink( .., .., dir);
+            int x = getXCoord(pLink);
+            int y = getYCoord(pLink);
+            b.moveLink( x, y, dir);
             // move such link in said direction
             // implement 
             //redraw graph in text and graphics
@@ -28,6 +30,9 @@ void Interact() {
         else if (command == "abilities") {
             // display all abilities player has with an ID 1-5
             // make an indication whether it was used or not
+            for (int i = 0; i < 5; i++) {
+                cout << i << " " << abilities1[i] << endl;
+            }
         }
         else if (command == "ability") {
             int n;
