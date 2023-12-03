@@ -1,6 +1,8 @@
 #ifndef __LINK_H__
 #define __LINK_H__
 
+#include <string>
+
 class Link {
     int xcoord;
     int ycoord;
@@ -15,12 +17,15 @@ public:
     Link();
     ~Link();
     
-    // set coords, and other fields (using the -ability1 and -ability2 commands in main)
+    // set coords, and other fields (using the -link1 and -link2 commands in main)
     void setCoords(int x, int y); // sets xcoord and ycoord fields
     void setPlayer(int player); // sets player1owns field
     void setVisibility(bool visible); // sets visible field
     void setData(bool contents); // sets isData field
     void setStrength(int strength); // sets strength field
+
+    // link movement
+    void moveLink(std::string dir); // dir is one of up, down, left, right
 
     // want to have all the ability methods here
 

@@ -1,5 +1,6 @@
 #include "link.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
 //new
@@ -36,4 +37,33 @@ void Link::setStrength(int strength) {
     this.strength = strength;
 }
 
+void Link::moveLink(std::string dir) {
+    // might need to check if this is a valid new coord
+    // might need to consider p1 vs p2 link
+    if (player1owns) { 
+        if (dir == "up") { // moving up is moving to the bottom of the board 
+        ycoord++;
+        } else if (dir == "down") {
+            ycoord--;
+        } else if (dir == "left") { // moving left looks like moving to the right of the board
+            xcoord++;
+        } else if (dir == "right") {
+            xcoord--;
+        } else {
+            cout << "not a valid direction" << endl;
+        } 
+    } else {
+        if (dir == "up") { // moving up is moving to the top of the board 
+            ycoord--;
+        } else if (dir == "down") {
+            ycoord++;
+        } else if (dir == "left") { // moving left looks like moving to the left of the board
+            xcoord--;
+        } else if (dir == "right") {
+            xcoord++;
+        } else {
+            cout << "not a valid direction" << endl;
+        } 
+    }
+}
 
