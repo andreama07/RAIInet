@@ -16,6 +16,11 @@ public:
     ~Link();
     
     // set coords, and other fields (using the -ability1 and -ability2 commands in main)
+    void setCoords(int x, int y); // sets xcoord and ycoord fields
+    void setPlayer(int player); // sets player1owns field
+    void setVisibility(bool visible); // sets visible field
+    void setData(bool contents); // sets isData field
+    void setStrength(int strength); // sets strength field
 
     // want to have all the ability methods here
 
