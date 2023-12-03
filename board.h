@@ -1,14 +1,16 @@
 #ifndef __BOARD_H__
 #define __BOARD_H__
 
-#include "Link.h"
+#include "link.h"
+#include "firewall.h"
 //#include "Direction"
 #include <vector>
+#include <string>
 
 
 class Board {
     std::vector<std::vector<Link*>> board; // 2D grid of pointers to Link objects
-    std::vector<std::vector<Firewall> firewalls; // 2D vector of Firewalls
+    std::vector<std::vector<Firewall>> firewalls; // 2D vector of Firewalls
     int boardSize = 8; 
     // Helper method
     bool isWithinBounds(int x, int y) const;
@@ -20,7 +22,7 @@ public:
     // Methods for setting up and managing the board
     void init(); // might not need this 
     void placeLink(int x, int y, Link& link);
-    bool moveLink(int startX, int startY, int endX, int endY, string dir);
+    bool moveLink(int startX, int startY, int endX, int endY, std::string dir);
     Link* getLinkAt(int x, int y);
     void removeLink(int x, int y); // downloading is basically removing it, and just updating the download section
     void activateFirewall(int x, int y, int playerNumber);

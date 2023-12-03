@@ -19,6 +19,6 @@ public:
 
     // want to have all the ability methods here
 
-}
+};
 
 #endif

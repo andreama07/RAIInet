@@ -15,6 +15,6 @@ public:
 
     bool firewallAffect(Link &link); 
 
-}
+};
 
 #endif

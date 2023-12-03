@@ -9,7 +9,7 @@ Board::Board() { // initializes the board
   firewalls.resize(boardSize, std::vector<bool>(boardSize, false)); 
 }
 
-bool Board::isWithinBounds(int x, int y) { // this function is done 
+bool Board::isWithinBounds(int x, int y) const { // this function is done 
   // need a size filed
   return ((x <= boardSize - 1 && x >= 0) && (y <= boardSize - 1 && y >= 0));
 }
@@ -105,7 +105,7 @@ void Board::activateFirewall(int x, int y, int playerNumber) {
   }
 }
 
-bool Board::isFirewall(int x, int y) {
+bool Board::isFirewall(int x, int y) const {
   if (isWithinBounds(x, y)) {
     return firewalls[x][y];
   }
