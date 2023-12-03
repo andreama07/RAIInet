@@ -19,10 +19,18 @@ public:
     
     // set coords, and other fields (using the -link1 and -link2 commands in main)
     void setCoords(int x, int y); // sets xcoord and ycoord fields
-    void setPlayer(int player); // sets player1owns field
+    void setOwner(int player); // sets player1owns field
     void setVisibility(bool visible); // sets visible field
     void setData(bool contents); // sets isData field
     void setStrength(int strength); // sets strength field
+
+    // accessor functions
+    int getXCoord(); 
+    int getYCoord();
+    int getOwner(); 
+    bool getVisibility(bool visible); 
+    bool getData(bool contents); 
+    int getStrength(int strength); 
 
     // link movement
     void moveLink(std::string dir); // dir is one of up, down, left, right

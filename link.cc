@@ -13,7 +13,7 @@ void Link::setCoords(int x, int y) {
     ycoord = y;
 }
 
-void Link::setPlayer(int owner) {
+void Link::setOwner(int owner) {
     if (owner == 1) {
         player1owns = true;
     }
@@ -66,4 +66,33 @@ void Link::moveLink(std::string dir) {
         } 
     }
 }
+
+int Link::getXCoord() {
+    return xcoord;
+}
+
+int Link::getYCoord() {
+    return ycoord;
+}
+
+int Link::getOwner() {
+    if (player1owns) {
+        return 1;
+    } else {
+        return 2;
+    }
+} 
+
+bool Link::getVisibility(bool visible) {
+    return visible;
+}
+
+bool Link::getData(bool contents) {
+    return isData;
+}
+
+int Link::getStrength(int strength) {
+    return strength;
+}
+
 
