@@ -19,8 +19,8 @@ void Interact() {
             string dir;
             cin >> dir;
             // fill with end and start positions
-            int x = getXCoord(pLink);
-            int y = getYCoord(pLink);
+            int x = xcoord(pLink);
+            int y = ycoord(pLink);
             b.moveLink( x, y, dir);
             // move such link in said direction
             // implement 
