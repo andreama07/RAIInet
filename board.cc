@@ -30,7 +30,8 @@ void Board::init() { // might not actually need this
     } else {
       link.setCoords(0, i);
     }
-    board.at(i).emplace_back(link);
+    // board.at(i).emplace_back(link);
+    p1links.emplace_back(link);
   }
 
   for (int i = 0; i < boardSize; i++) { // sets player 1's 8 links
@@ -41,12 +42,13 @@ void Board::init() { // might not actually need this
       link.setCoords(7, i);
     }
     board.at(i).emplace_back(link);
+    p2links.emplace_back(link);
   }
 
   // add observers
   td = new TextDisplay();
   // need to attach as observers 
-  
+
   
 }
 

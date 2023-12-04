@@ -8,9 +8,10 @@
 #include <vector>
 #include <string>
 
-
 class Board {
-    std::vector<std::vector<Link*>> board; // 2D grid of pointers to Link objects
+    //std::vector<std::vector<Link*>> board; // 2D grid of pointers to Link objects
+    std::vector<Link> p1links; // vector to store player 1's links
+    std::vector<Link> p2links; // vector to store player 2's links
     std::vector<std::vector<Firewall>> firewalls; // 2D vector of Firewalls
     int boardSize; 
     TextDisplay* td;
