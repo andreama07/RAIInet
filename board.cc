@@ -4,7 +4,7 @@
 #include "board.h"
 using namespace std;
 
-Board::Board() { // initializes the board 
+Board::Board() : boardSize{8}, td{nullptr} { // initializes the board 
   board.resize(boardSize, std::vector<Link*>(boardSize, nullptr)); 
   firewalls.resize(boardSize, std::vector<bool>(boardSize, false)); 
 }
@@ -19,17 +19,34 @@ Board::~Board() { // nothing might actually need to be done here as nothing uses
     board.at(i).clear();
   }
   boardSize = 0;
-  // delete td;
+  delete td;
 }
 
 void Board::init() { // might not actually need this 
+  for (int i = 0; i < boardSize; i++) { // sets player 1's 8 links
+    Link link;
+    if (i == 4 || i == 5) {
+      link.setCoords(1, i);
+    } else {
+      link.setCoords(0, i);
+    }
+    board.at(i).emplace_back(link);
+  }
 
+  for (int i = 0; i < boardSize; i++) { // sets player 1's 8 links
+    Link link;
+    if (i == 4 || i == 5) {
+      link.setCoords(6, i);
+    } else {
+      link.setCoords(7, i);
+    }
+    board.at(i).emplace_back(link);
+  }
 
-  // add observers?
-  //td = new TextDisplay(n);
+  // add observers
+  td = new TextDisplay();
   // need to attach as observers 
-  // helloo
-
+  
   
 }
 

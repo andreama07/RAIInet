@@ -3,6 +3,7 @@
 
 #include "link.h"
 #include "firewall.h"
+#include "textdisplay.h"
 //#include "Direction"
 #include <vector>
 #include <string>
@@ -11,7 +12,8 @@
 class Board {
     std::vector<std::vector<Link*>> board; // 2D grid of pointers to Link objects
     std::vector<std::vector<Firewall>> firewalls; // 2D vector of Firewalls
-    int boardSize = 8; 
+    int boardSize; 
+    TextDisplay* td;
     // Helper method
     bool isWithinBounds(int x, int y) const;
     

@@ -4,7 +4,7 @@
 
 using namespace std;
 //new
-Link::Link() {}
+Link::Link() : visible{false} {}
 
 Link::~Link() {}
 
@@ -36,6 +36,10 @@ void Link::setData(bool contents) {
 void Link::setStrength(int strength) {
     this.strength = strength;
 }
+
+/* void Link::setEmpty(bool empty) {
+    this.empty = empty;
+} */
 
 void Link::moveLink(std::string dir) {
     // might need to check if this is a valid new coord
@@ -83,16 +87,20 @@ int Link::getOwner() {
     }
 } 
 
-bool Link::getVisibility(bool visible) {
+bool Link::getVisibility() {
     return visible;
 }
 
-bool Link::getData(bool contents) {
+bool Link::getData() {
     return isData;
 }
 
-int Link::getStrength(int strength) {
+int Link::getStrength() {
     return strength;
 }
+
+/* bool Link::getEmpty() {
+    return empty;
+} */
 
 
