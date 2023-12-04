@@ -50,6 +50,7 @@ void Interact() {
             string command;
             while (f >> s) {
                 // execute each s here
+                // call the function to read
             } 
             // execute the sequence of commands found in file
         }
