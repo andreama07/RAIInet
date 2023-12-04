@@ -1,5 +1,11 @@
 #include <iostream>
 #include <string>
+#include <fstream>
+#include "link.h"
+#include "board.h"
+#include "gameControl.h"
+#include "player.h"
+#include "textdisplay.h"
 
 using namespace std;
 
@@ -9,8 +15,18 @@ int main () {
     string command;
     string ability1[5];
     string ability2[5];
+    Link p1links[8];
+    Link p2links[8];
     // start with any setup needed for testing
     // loops while input is not quit, EOF
+    for (int i = 0; i < 8; i++) {
+        Link p1empty;
+        p1links[i] = p1empty;
+    }
+    for (int i = 0; i < 8; i++) {
+        Link p2empty;
+        p2links[i] = p2empty;
+    }
 
     // setup
     // find a better way to loop around this
@@ -79,14 +95,86 @@ int main () {
                     break; 
                 }
         } else if (init == "-link1") {
-            string f;
-            cin >> f;
+            string fname;
+            cin >> fname;
+            if (fname == "\n") {
+                // randomize the links
+
+            } else {
+                ifstream f{fname}; 
+                string s;
+                int count = 0;
+                while (f >> s) {
+                    // set whether the link is a data or a virus
+                    if (s[0] == "V") {
+                        p1links[count].setData(false);
+                    } else if (s[0] == "D") {
+                        p1links[count].setData(true);
+                    } else {
+                        cout << "invalid link information" << endl;
+                        break;
+                    }
+                    // set the strength of the link
+                    if (s[1] == "1") {
+                        p1links[count].setStrength(1);
+                    } else if (s[1] == "2") {
+                        p1links[count].setStrength(2);
+                    } else if (s[1] == "3") {
+                        p1links[count].setStrength(3);
+                    } else if (s[1] == "4") {
+                        p1links[count].setStrength(4);
+                    } else {
+                        cout << "strength is invalid" << endl;
+                    }
+                    p1links[count].setVisibility(false); // always starts as false until the link is revealed
+                    count++;
+                    if (count >= 8) { // if there is extra information is the file
+                        break;
+                    }
+                }
+            }
             // file with player 1s links
             // if no file, then randomize
         } else if (init == "-link2") {
-            string f;
-            cin >> f;
             // same as above but for player 2
+            string fname;
+            cin >> fname;
+            if (fname == "\n") {
+                // randomize the links
+
+            } else {
+                ifstream f{fname}; 
+                string s;
+                int count = 0;
+                while (f >> s) {
+                    // set whether the link is a data or a virus
+                    if (s[0] == "V") {
+                        p2links[count].setData(false);
+                    } else if (s[0] == "D") {
+                        p2links[count].setData(true);
+                    } else {
+                        cout << "invalid link information" << endl;
+                        break;
+                    }
+                    // set the strength of the link
+                    if (s[1] == "1") {
+                        p2links[count].setStrength(1);
+                    } else if (s[1] == "2") {
+                        p2links[count].setStrength(2);
+                    } else if (s[1] == "3") {
+                        p2links[count].setStrength(3);
+                    } else if (s[1] == "4") {
+                        p2links[count].setStrength(4);
+                    } else {
+                        cout << "strength is invalid" << endl;
+                    }
+                    p2links[count].setVisibility(false); // always starts as false until the link is revealed
+                    count++;
+                    if (count >= 8) { // if there is extra information is the file
+                        break;
+                    }
+                }
+            }
         } else if (init == "graphics") {
             // enable graphical interface
         }
@@ -96,3 +184,4 @@ int main () {
    
     }
 }
+
