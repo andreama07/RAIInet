@@ -76,9 +76,10 @@ void Board::setStrength(int playerNum, int linkNum, int strength) {
 
 
 void Board::moveLink(char link, string dir) {
-  int linkNum, x, y;
+  int linkNum, x, y, initiatingPlayer;
   if (playerTurn == 1) {
     linkNum = link - 'a';
+    initiatingPlayer = 1;
     x = p1links.at(linkNum).getXCoord();
     y = p1links.at(linkNum).getYCoord();
     p1links.at(linkNum).setPrevCoords(x, y); // keeping track of coords before moving
@@ -93,8 +94,9 @@ void Board::moveLink(char link, string dir) {
     }
     p1links.at(linkNum).setCoords(x, y); // updating coords after moving
     td->notify(p1links.at(linkNum));
-  } else {
+  } else { 
     linkNum = link - 'A';
+    initiatingPlayer = 2;
     x = p2links.at(linkNum).getXCoord();
     y = p2links.at(linkNum).getYCoord();
     p2links.at(linkNum).setPrevCoords(x, y); // keeping track of coords before moving
@@ -111,13 +113,79 @@ void Board::moveLink(char link, string dir) {
     td->notify(p2links.at(linkNum));
   }
   
-  // probably need to set old coords to update td
-  
-  // Handle the case where the destination is occupied
-  // if (isSquareOccupied(endX, endY)) {
-    // battle will happen here
-    // return 3; 
-  // cout << "battle needs to occur" << endl;
+  // check for battle
+  bool oppOccupied = false;
+  int oppx, oppy, oppNum;
+  if (playerTurn == 1) {
+    linkNum = link - 'a';
+    x = p1links.at(linkNum).getXCoord();
+    y = p1links.at(linkNum).getYCoord();
+    for (int i = 0; i < 8; i++) {
+      oppx = p2links.at(i).getXCoord();
+      oppy = p2links.at(i).getYCoord();
+      if (x == oppx && y == oppy) {
+        oppOccupied = true;
+        oppNum = i;
+        break;
+      }
+    }
+  } else{
+    linkNum = link - 'A';
+    x = p2links.at(linkNum).getXCoord();
+    y = p2links.at(linkNum).getYCoord();
+    for (int i = 0; i < 8; i++) {
+      oppx = p1links.at(i).getXCoord();
+      oppy = p1links.at(i).getYCoord();
+      if (x == oppx && y == oppy) {
+        oppOccupied = true;
+        oppNum = i;
+        break;
+      }
+    }
+  }
+
+  //battle
+  int mystrength;
+  int oppstrength;
+  if (oppOccupied) {
+    // need to reveal links
+    if (playerTurn == 1) {
+      linkNum = link - 'a';
+      mystrength = p1links.at(linkNum).getStrength();
+      oppstrength = p2links.at(oppNum).getStrength();
+      
+      if (mystrength > oppstrength) { // p1 wins battle
+        // download link of p2
+      } else if (mystrength < oppstrength) { // p2 wins battle
+
+      } else { // tie
+        if (initiatingPlayer == 1) { // p1 wins battle
+
+        } else { // p2 wins battle
+
+        }
+      }
+
+    } else { //p2 turn
+      linkNum = link - 'A';
+      mystrength = p2links.at(linkNum).getStrength();
+      oppstrength = p1links.at(oppNum).getStrength();
+
+      if (mystrength > oppstrength) { // p2 wins battle
+        // download link of p1
+      } else if (mystrength < oppstrength) { // p1 wins battle
+
+      } else { // tie
+        if (initiatingPlayer == 2) { // p2 wins battle
+
+        } else { // p1 wins battle
+
+        }
+      }
+    }
+  }
+
+  // print out the board after move
   cout << *this << endl;
 
 } 
