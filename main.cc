@@ -11,40 +11,9 @@
 
 using namespace std;
 
-// helper functions for the commands:
-void move() {
-    string pLink;
-    cin >> pLink;
-    string dir;
-    cin >> dir;
-    // fill with end and start positions
-    int x = xcoord(pLink);
-    int y = ycoord(pLink);
-    b.moveLink( x, y, dir); 
-    //redraw graph in text and graphics
-    // for the graphic redraw, redraw as little as possible
-}
-
-void print_abilities() {
-    for (int i = 0; i < 5; i++) {
-        cout << i << " " << abilities1[i] << endl;
-    }
-}
-
-void use_ability() {
-    int n;
-    cin >> n;
-    // uses ability with ID n 
-    // depending on ability, require further input
-}
-
-void display_board() {
-    // need graphics display
-}
-
-
 int main (int argc, char *argv[]) {
 
+    // initialize the variables that are needed
     string init;
     string command;
     string ability1[5];
@@ -61,6 +30,40 @@ int main (int argc, char *argv[]) {
     }
 
 
+    // helper functions for the commands:
+
+    void move() {
+        string pLink;
+        cin >> pLink;
+        string dir;
+        cin >> dir;
+        // fill with end and start positions
+        int x = xcoord(pLink);
+        int y = ycoord(pLink);
+        b.moveLink( x, y, dir); 
+        //redraw graph in text and graphics
+        // for the graphic redraw, redraw as little as possible
+    }
+
+    void print_abilities() {
+        for (int i = 0; i < 5; i++) {
+            cout << i << " " << abilities1[i] << endl;
+        }
+    }
+
+    void use_ability() {
+        int n;
+        cin >> n;
+        // uses ability with ID n 
+        // depending on ability, require further input
+    }
+
+    void display_board() {
+        // need graphics display
+    }
+
+
+    // initialize the game
     for(int i = 0; i < argc; i++) {
         string input = argv[i]; 
         if (input[0] == '-') {
@@ -109,6 +112,36 @@ int main (int argc, char *argv[]) {
     }
     for (auto p: link2) {
         cout << "Link: " << p.first << " " << "Strength: " << p.second << endl;
+    }
+
+    // take in the commands
+    while (true) {
+        move();
+        print_abilities();
+        use_ability();
+        display_board();
+        cin >> command;
+        if (command == "sequence") {
+            string fName;
+            cin >> fName;
+            ifstream f{fName};
+            string command;
+            while (f >> s) {
+                if (s == "move") {
+                    move();
+                } else if (s == "abilities") {
+                    print_abilities();
+                } else if (s == "ability") {
+                    use_ability();
+                } else if (s == "board") {
+                    display_board();
+                } else if (s == "quit") {
+                    break;
+                }
+            } 
+        } else if (command == "quit") {
+            break;
+        }
     }
 }
 
