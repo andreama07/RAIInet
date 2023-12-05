@@ -7,7 +7,6 @@
 //#include "gameControl.h"
 #include "player.h"
 #include "textdisplay.h"
-// #include <utility>
 
 using namespace std;
 
@@ -86,16 +85,8 @@ int main (int argc, char *argv[]) {
     string init;
     string command;
 
-    Link *p1links[8]; // needs to be a pointer
-    Link *p2links[8];
-
     string ability1[5];
     string ability2[5];
-
-    bool linksAreData1[5];
-    bool linksAreData2[5];
-    int strengths1[5];
-    int strengths2[5];
 
     // Player p;
 
@@ -109,21 +100,21 @@ int main (int argc, char *argv[]) {
     for(int i = 0; i < argc; i++) {
         string input = argv[i]; 
         if (input[0] == '-') {
-            string currinp = input.substr(1); 
-            if (currinp == "ability1") {
+            string curInput = input.substr(1); 
+            if (curInput == "ability1") {
                 i++;
                 string abilities = argv[i]; 
                 for (long unsigned int q = 0; q < abilities.length(); q++) {
                     ability1[q] = abilities[q];
                 }
                 
-            } else if (currinp == "ability2") {
+            } else if (curInput == "ability2") {
                 i++;
                 string abilities = argv[i]; 
                 for (long unsigned int q = 0; q < abilities.length(); q++) {
                     ability2[q] = abilities[q];
                 } 
-            } else if (currinp == "link1") {
+            } else if (curInput == "link1") {
                 i++;
                 ifstream file{argv[i]};
                 string tmp; 
@@ -131,39 +122,40 @@ int main (int argc, char *argv[]) {
                 while (file >> tmp) {
                     
                     if (tmp[0] == 'D') {
-                        linksAreData1[counter] = true;
+                        b.setData(1, counter, true);
                     } else { // first letter is "V"
-                        linksAreData1[counter] = false;
+                        b.setData(1, counter, false);
                     }
-                    strengths1[counter] = tmp[1] - '0';
+                        // cout << "strength val: " << tmp[1] - '0' << endl;
+                        b.setStrength(1, counter, tmp[1] - '0');
                     counter++;
                 }
-            } else if (currinp == "link2") {
+            } else if (curInput == "link2") {
                 i++;
                 ifstream file{argv[i]};
                 string tmp; 
                 int counter = 0;
                 while (file >> tmp) {
                     if (tmp[0] == 'D') {
-                        linksAreData2[counter] = true;
+                        b.setData(2, counter, true);
                     } else { // first letter is "V"
-                        linksAreData2[counter] = false;
+                        b.setData(2, counter, false);
                     }
-                    strengths2[counter] = tmp[1] - '0';
+                        b.setStrength(2, counter, tmp[1] - '0');
                     counter++;
                 }
-            } else if (currinp == "graphics") {
+            } else if (curInput == "graphics") {
                 cout << "graphics" << endl; // refers to window.cc X11
             }
         }
-       cout << "i " << argv[i] << endl;
     }
     for (int i = 0; i < 8; i++) {
-        cout << "P1 Link: " << i << " is " << linksAreData1[i] << " Strength: " << strengths1[i] << endl;
+        cout << "P1 Link: " << i << " is " << b.getData(1, i) << " Strength: " << b.getStrength(1, i) << endl;
     }
     for (int i = 0; i < 8; i++) {
-        cout << "P2 Link: " << i << " is " << linksAreData2[i] << " Strength: " << strengths2[i] << endl;
+        cout << "P2 Link: " << i << " is " << b.getData(2, i) << " Strength: " << b.getStrength(2, i) << endl;
     }
+    cout << b << endl;
 
     // take in the commands
     while (true) {

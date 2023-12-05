@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "observer.h"
+#include "link.h"
 
 class Link;
 

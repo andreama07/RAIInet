@@ -23,16 +23,16 @@ void Board::init() { // initializes board with empty links and attaches textDisp
 
   for (int i = 0; i < boardSize; i++) { // sets player 1's 8 links
     Link link;
-    if (i == 4 || i == 5) {
+    if (i == 3 || i == 4) {
       link.setCoords(1, i);
     } else {
       link.setCoords(0, i);
     }
     p1links.emplace_back(link);
   }
-  for (int i = 0; i < boardSize; i++) { // sets player 1's 8 links
+  for (int i = 0; i < boardSize; i++) { // sets player 2's 8 links
     Link link;
-    if (i == 4 || i == 5) {
+    if (i == 3 || i == 4) {
       link.setCoords(6, i);
     } else {
       link.setCoords(7, i);
@@ -57,11 +57,31 @@ void Board::placeLink(int x, int y, Link& link) {
     // return false; // square is occupied, would need to use this for the battle function
   }
 
-  // board[x][y] = &link; 
-  // return true; 
 }
 
-void Board::moveLink(int startX, int startY, std::string dir) { // we are going to assume that the user is going to write up, down... or are we going by north, south...
+void Board::setData(int playerNum, int linkNum, bool isData) {
+  if (playerNum == 1) {
+    p1links.at(linkNum).setData(isData);
+  } else if (playerNum == 2) {
+    p2links.at(linkNum).setData(isData);
+  } else {
+    cout << "invalid playerNum" << endl;
+  }
+}
+
+void Board::setStrength(int playerNum, int linkNum, int strength) {
+  if (playerNum == 1) {
+    //cout << "strength in board: " << strength << endl;
+    p1links.at(linkNum).setStrength(strength);
+  } else if (playerNum == 2) {
+    p2links.at(linkNum).setStrength(strength);
+  } else {
+    cout << "invalid playerNum" << endl;
+  }
+}
+
+
+void Board::moveLink(int startX, int startY, string dir) {
   int endY = startY; 
   int endX = startX;
 
@@ -129,6 +149,28 @@ bool Board::isFirewall(int x, int y) const {
   }
   return false;
 } */
+
+bool Board::getData(int playerNum, int linkNum) {
+  if (playerNum == 1) {
+    return p1links.at(linkNum).getData();
+  } else if (playerNum == 2) {
+    return p2links.at(linkNum).getData();
+  } else {
+    cout << "invalid playerNum" << endl;
+    return false;
+  }
+}
+
+int Board::getStrength(int playerNum, int linkNum) {
+  if (playerNum == 1) {
+    return p1links.at(linkNum).getStrength();
+  } else if (playerNum == 2) {
+    return p2links.at(linkNum).getStrength();
+  } else {
+    cout << "invalid playerNum" << endl;
+    return 0;
+  }
+}
 
 bool Board::isSquareOccupied(int x, int y) const {
   // return isWithinBounds(x,y) && board[x][y] != nullptr;

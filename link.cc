@@ -3,7 +3,7 @@
 #include <string>
 
 using namespace std;
-//new
+
 Link::Link() : visible{false} {}
 
 Link::~Link() {}
@@ -96,6 +96,7 @@ bool Link::getData() {
 }
 
 int Link::getStrength() {
+    // cout << "strength in link: " << strength << endl;
     return strength;
 }
 
