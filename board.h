@@ -27,11 +27,10 @@ public:
     ~Board();
 
     // Methods for setting up and managing the board
-    void init(); // might not need this 
-    void placeLink(int x, int y, Link& link);
+    void init(); 
     void setData(int playerNum, int linkNum, bool isData);
     void setStrength(int playerNum, int linkNum, int strength);
-    void moveLink(int startX, int startY, std::string dir);
+    void moveLink(char link, std::string dir);
     Link* getLinkAt(int x, int y);
     void removeLink(int x, int y); // downloading is basically removing it, and just updating the download section
     void activateFirewall(int x, int y, int playerNumber);
@@ -45,8 +44,9 @@ public:
     Player* getPlayer(int player) const;
 
     // Utility methods for checking board state
-    bool isSquareOccupied(int x, int y) const;
-    bool isValidPosition(int x, int y) const;
+    bool occupiedByOwn(int x, int y) const;
+    bool isValidMove(char link, std::string dir) const;
+    bool isValidLink(char c) const;
 
     // Other methods related to board management
     void printLink(int playerNum, int linkNum, int playerTurn) const;

@@ -26,6 +26,7 @@ void Board::init() { // initializes board with empty links and attaches textDisp
 
   for (int i = 0; i < boardSize; i++) { // sets player 1's 8 links
     Link link;
+    link.setOwner(1);
     if (i == 3 || i == 4) {
       link.setCoords(1, i);
     } else {
@@ -35,6 +36,7 @@ void Board::init() { // initializes board with empty links and attaches textDisp
   }
   for (int i = 0; i < boardSize; i++) { // sets player 2's 8 links
     Link link;
+    link.setOwner(2);
     if (i == 3 || i == 4) {
       link.setCoords(6, i);
     } else {
@@ -50,17 +52,6 @@ void Board::init() { // initializes board with empty links and attaches textDisp
 
   // need to attach as observers 
 
-
-}
-
-void Board::placeLink(int x, int y, Link& link) {
-  if (!isWithinBounds(x, y)) {
-    // return false; // out of bounds, might not be able to use placeLink when working with the download fucntion
-  }
-
-  if (isSquareOccupied(x,y)) {
-    // return false; // square is occupied, would need to use this for the battle function
-  }
 
 }
 
@@ -86,47 +77,36 @@ void Board::setStrength(int playerNum, int linkNum, int strength) {
 }
 
 
-void Board::moveLink(int startX, int startY, string dir) {
-  int endY = startY; 
-  int endX = startX;
-
-
-  if (dir == "up") {
-    --endY; // prefix modifies the value immediately
-  } else if (dir == "down") {
-    ++endY;
-  } else if (dir == "left") {
-    --endX;
-  } else if (dir == "right") {
-    ++endX;
+void Board::moveLink(char link, string dir) {
+  int linkNum, x, y;
+  if (playerTurn == 1) {
+    linkNum = link - 'a';
+    x = p1links.at(linkNum).getXCoord();
+    y = p1links.at(linkNum).getYCoord();
   } else {
-    // return 1; 
-    cout << "no valid direction given" << endl;
-  } 
-
-
-// Check if both start and end positions are within bounds
-  if (!isValidPosition(endX, endY)) {
-    // return 2; 
-    cout << "end position not valid" << endl;
+    linkNum = link - 'A';
+    x = p2links.at(linkNum).getXCoord();
+    y = p2links.at(linkNum).getYCoord();
   }
-
-  // Check if the starting position is occupied by a link
- // if (!isSquareOccupied(startX, startY)) {
- //   return false; // No link at the starting position
- // }
+  if (dir.strcmp("up") == 0) {
+      y++;
+    } else if (dir.strcmp("down") == 0) {
+      y--;
+    } else if (dir.strcmp("left") == 0) {
+      x--;
+    } else if (dir.strcmp("right") == 0) {
+      x++;
+    }
+  // probably need to set old coords to update td
 
   // Handle the case where the destination is occupied
-  if (isSquareOccupied(endX, endY)) {
+  // if (isSquareOccupied(endX, endY)) {
     // battle will happen here
     // return 3; 
     cout << "battle needs to occur" << endl;
-  }
 
-  // Move the link
-  // board[endX][endY] = board[startX][startY];
-  // board[startX][startY] = nullptr;
-  // return true;
+  td.notify();
+
 } 
 
 Link* Board::getLinkAt(int x, int y) {
@@ -193,14 +173,60 @@ Player* Board::getPlayer(int player) const {
   }
 }
 
-bool Board::isSquareOccupied(int x, int y) const {
-  // return isWithinBounds(x,y) && board[x][y] != nullptr;
-  return false;
+bool Board::occupiedByOwn(int x, int y) const {
+  occupied = false;
+  if (playerTurn == 1) {
+    for (int i = 0; i < p1links.size(); i++) {
+      if (p1links.at(i).getXCoord == x && p1links.at(i).getYCoord() == y) {
+        occupied = true;
+      }
+    }
+  } else { // playerTurn == 2
+    for (int i = 0; i < p2links.size(); i++) {
+      if (p2links.at(i).getXCoord == x && p2links.at(i).getYCoord() == y) {
+        occupied = true;
+      }
+    }
+  }
+  return occupied;
 }
 
-bool Board::isValidPosition(int x, int y) const {
-  // return ((x <= boardSize - 1 && x >= 0) && (y <= boardSize && y >= -1));
+bool Board::isValidMove(char link, string dir) const {
+  int linkNum, x, y;
+  if (playerTurn == 1) {
+    linkNum = link - 'a';
+    x = p1links.at(linkNum).getXCoord();
+    y = p1links.at(linkNum).getYCoord();
+  } else {
+    linkNum = link - 'A';
+    x = p2links.at(linkNum).getXCoord();
+    y = p2links.at(linkNum).getYCoord();
+  }
+  if (dir.stcmp("up") == 0) {
+    y++;
+  } else if (dir.strcmp("down") == 0) {
+    y--;
+  } else if (dir.strcmp("left") == 0) {
+    x--;
+  } else if (dir.strcmp("right") == 0) {
+    x++;
+  }
+  if (y < 0 || y >= boardSize || x < 0 || x >= boardSize) { // check if new position is within the board
+    return false;
+  } else if (occupiedByOwn(x, y)) { // check if new position already has one of player's pieces
+    return false;
+  }
   return true;
+}
+
+bool Board::isValidLink(char c) const {
+  if (playerTurn == 1 && c >= 'a' && c <= 'h') {
+    return true;
+  } else if (playerTurn == 2 && c >= 'A' && c <= 'H') {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 void Board::printLink(int playerNum, int linkNum, int playerTurn) const {
@@ -235,8 +261,9 @@ ostream &operator<<(ostream &out, const Board &b) {
       }
     }
   }
-  out << endl;
-  out << *b.td;
+  out << endl << "========" << endl;
+  out << *b.td; // printing out the board
+  out << "========" << endl;
   out << "Player 2:" << endl; // printing out player 2 info
   out << "Downloaded: " << b.getPlayer(2)->getDownloadedDataCount() << "D, " << b.getPlayer(2)->getDownloadedVirusCount() << "V" << endl; 
   out << "Abilities: " << b.getPlayer(2)->getAbilityCount() << endl;

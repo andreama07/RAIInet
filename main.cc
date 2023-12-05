@@ -10,22 +10,7 @@
 
 using namespace std;
 
-// helper functions for the commands:
-
-/* void move() {
-    string pLink;
-    cin >> pLink;
-    string dir;
-    cin >> dir;
-    // fill with end and start positions
-    int x = xcoord(pLink);
-    int y = ycoord(pLink);
-    pLink.moveLink( x, y, dir); 
-    //redraw graph in text and graphics
-    // for the graphic redraw, redraw as little as possible
-}
-
-void print_abilities() {
+/* void print_abilities() {
     for (int i = 0; i < 5; i++) {
         if 
         cout << i << " " << abilities1[i] << endl;
@@ -78,17 +63,22 @@ void display_board() {
 } */
 
 
+// helper functions for main
+bool isValidDir(string dir) {
+    if (dir.strcmp("up") == 0 || dir.strcmp("down") == 0 || dir.strcmp("left") == 0|| dir.strcmp("right") == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 // START OF MAIN FUNCTION
 int main (int argc, char *argv[]) {
 
     // initialize the variables that are needed
-    string init;
-    string command;
-
     string ability1[5];
     string ability2[5];
-
-    // Player p;
 
     // outputting command line arguments for testing
     // for(int i = 0; i < argc; i++) {
@@ -97,7 +87,7 @@ int main (int argc, char *argv[]) {
 
     Board b;
     b.init();
-    // initialize the game
+    // setup for the game
     for(int i = 0; i < argc; i++) {
         string input = argv[i]; 
         if (input[0] == '-') {
@@ -151,46 +141,64 @@ int main (int argc, char *argv[]) {
         }
     }
     // output textdisplay
+    b.setPlayerTurn(1);
     cout << b << endl;
 
-    // take in the commands
-    while (true) {
-        // move();
-        // print_abilities();
-        // use_ability();
-        // display_board();
-        cin >> command;
-        if (command == "move") {
-            cout << "move link" << endl;
-        } else if (command == "abilities") {
-            cout << "print out abilities" << endl;
-        } else if (command == "ability") {
-            cout << "use a specific ability" << endl;
-        } else if (command == "board") {
-            cout << "print out the board" << endl;
-        } else if (command == "sequence") {
-            cout << "execute the commands in the given file" << endl;
-            /* string fName;
-            cin >> fName;
-            ifstream f{fName};
-            string command;
-            while (f >> s) {
-                if (s == "move") {
-                    move();
-                } else if (s == "abilities") {
-                    print_abilities();
-                } else if (s == "ability") {
-                    use_ability();
-                } else if (s == "board") {
-                    display_board();
-                } else if (s == "quit") {
-                    break;
+    string command;
+    bool endGame; 
+    while (!endGame) { // while the game is not over
+        while (cin >> command) { // while there is still input
+            if (command == "move") {
+                cout << "move link" << endl;
+                char link;
+                string dir;
+                cin >> link;
+                cin >> dir;
+                if (b.isValidLink(link)) {
+                    if (isValidDir(dir)) {
+                        if (isValidMove(link, dir)) {
+                            b.move(link, dir);
+                        } else {
+                            cout << "not a valid move" << endl;
+                            continue;
+                        }
+                    } else {
+                        cout << "not a valid direction" << endl;
+                        continue;
+                    }
+                } else {
+                    cout << "not a valid link for you" << endl;
+                    continue;
                 }
-            } */
-        } else if (command == "quit") {
-            cout << "ending the game" << endl;
-            break;
+                if (b.getPlayerTurn() == 1) { // turn is over after a link is moved
+                    b.setPlayerTurn(2);
+                    cout << "Player 2 Turn!" << endl;
+                } else {
+                    b.setPlayerTurn(1);
+                    cout << "Player 1 Turn!" << endl;
+                }
+            } else if (command == "abilities") {
+                cout << "print out abilities" << endl;
+            } else if (command == "ability") {
+                cout << "use a specific ability" << endl;
+            } else if (command == "board") {
+                // cout << "print out the board" << endl;
+                cout << b << endl;
+            } else if (command == "quit") { // need to check end of game statuses (4V or 4D)
+                // cout << "ending the game" << endl;
+                break;
+            } else if (command == "sequence") {
+                cout << "execute the commands in the given file" << endl;
+                string fName;
+                cin >> fName;
+                ifstream f{fName};
+                string s;
+                while (f >> s) {
+                    // same as non-file implementation (copy paste in)
+                }
+            } 
         }
+        endGame = true;
     }
 }
 
