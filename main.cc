@@ -24,6 +24,7 @@ int main (int argc, char *argv[]) {
     std::array<pair<char, int>, 8> link1;
     std::array<pair<char, int>, 8> link2;
 
+    Player p;
 
     for(int i = 0; i < argc; i++) {
        cout << "i " << argv[i] << endl;
@@ -40,21 +41,56 @@ int main (int argc, char *argv[]) {
         // fill with end and start positions
         int x = xcoord(pLink);
         int y = ycoord(pLink);
-        b.moveLink( x, y, dir); 
+        pLink.moveLink( x, y, dir); 
         //redraw graph in text and graphics
         // for the graphic redraw, redraw as little as possible
     }
 
     void print_abilities() {
         for (int i = 0; i < 5; i++) {
+            if 
             cout << i << " " << abilities1[i] << endl;
         }
     }
 
+    // ************ need help calling the abilities *******************
     void use_ability() {
         int n;
         cin >> n;
         // uses ability with ID n 
+        string ab = ability1[n - 1];
+
+        // add a - if used
+        ability1[n-1] = "-" + "ab";
+        // firewall
+        if (ab == "F") {
+            int x;
+            int y;
+            cin >> x >> y;
+            // player num p
+            firewall(x, y, p);
+            
+        } else if (ab == "S") {
+            // scan
+            Link l;
+            cin >> l;
+            scan(l);
+        } else if (ab == "P") {
+            //polarize
+            Link l;
+            cin >> l;
+            polarize(l);
+        } else if (ab == "L") {
+            // link boost
+            Link l;
+            cin >> l;
+            linkboost(l);
+        } else if (ab == "D") {
+            // download
+            Link l;
+            cin >> l;
+            download(l);
+        }
         // depending on ability, require further input
     }
 
