@@ -10,15 +10,8 @@
 
 using namespace std;
 
-/* void print_abilities() {
-    for (int i = 0; i < 5; i++) {
-        if 
-        cout << i << " " << abilities1[i] << endl;
-    }
-}
-
 // ************ need help calling the abilities *******************
-void use_ability() {
+/* void use_ability() {
     int n;
     cin >> n;
     // uses ability with ID n 
@@ -96,14 +89,16 @@ int main (int argc, char *argv[]) {
                 i++;
                 string abilities = argv[i]; 
                 for (long unsigned int q = 0; q < abilities.length(); q++) {
-                    ability1[q] = abilities[q];
+                    b.getPlayer(1)->setAbility(q, abilities[q]);
+                    // cout << ability1[q];
                 }
                 
             } else if (curInput == "ability2") {
                 i++;
                 string abilities = argv[i]; 
                 for (long unsigned int q = 0; q < abilities.length(); q++) {
-                    ability2[q] = abilities[q];
+                    b.getPlayer(2)->setAbility(q, abilities[q]);
+                    // cout << ability2[q];
                 } 
             } else if (curInput == "link1") {
                 i++;
@@ -149,7 +144,7 @@ int main (int argc, char *argv[]) {
     while (!endGame) { // while the game is not over
         while (cin >> command) { // while there is still input
             if (command == "move") {
-                cout << "move link" << endl;
+                // cout << "move link" << endl;
                 char link;
                 string dir;
                 cin >> link;
@@ -157,9 +152,7 @@ int main (int argc, char *argv[]) {
                 if (b.isValidLink(link)) {
                     if (isValidDir(dir)) {
                         if (b.isValidMove(link, dir)) {
-                            cout << "everything good, about to move" << endl;
                             b.moveLink(link, dir);
-                            cout << "finished move" << endl;
                         } else {
                             cout << "not a valid move" << endl;
                             continue;
@@ -181,6 +174,11 @@ int main (int argc, char *argv[]) {
                 }
             } else if (command == "abilities") {
                 cout << "print out abilities" << endl;
+                if (b.getPlayerTurn() == 1) {
+                    b.getPlayer(1)->printAbilities();
+                } else { // player2 turn
+                    b.getPlayer(2)->printAbilities();
+                }
             } else if (command == "ability") {
                 cout << "use a specific ability" << endl;
             } else if (command == "board") {

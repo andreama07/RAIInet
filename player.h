@@ -9,6 +9,7 @@
 class Player {
     int playerNum;
     std::vector<char> abilities; // need to figure out where abilities go
+    std::vector<bool> abilityUsed;
     int downloadedDataCount;
     int downloadedVirusCount;
     int abilityCount;
@@ -24,9 +25,13 @@ public:
     int getDownloadedDataCount() const;
     int getDownloadedVirusCount() const;
     int getAbilityCount() const;
+
+    void setAbility(int id, char letter);
+    void setUsed(int id);
     void incrementDownloadedData();
     void incrementDownloadedVirus();
     void decrementAbilityCount();
+    void printAbilities();
 
     // Other player-specific methods
 

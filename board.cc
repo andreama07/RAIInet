@@ -46,13 +46,11 @@ void Board::init() { // initializes board with empty links and attaches textDisp
   }
   // add observers
   td = new TextDisplay();
-  p1 = new Player(1);
-  p2 = new Player(2);
   // gd = new GraphicDisplay();
-
-  // need to attach as observers 
-
-
+  // add players (used for abilities and stats)
+  p1 = new Player(1); 
+  p2 = new Player(2);
+  
 }
 
 void Board::setData(int playerNum, int linkNum, bool isData) {
@@ -120,7 +118,7 @@ void Board::moveLink(char link, string dir) {
     // battle will happen here
     // return 3; 
   // cout << "battle needs to occur" << endl;
-  cout << *td << endl;
+  cout << *this << endl;
 
 } 
 
