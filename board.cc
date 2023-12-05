@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include "board.h"
+
 using namespace std;
 
 Board::Board() : boardSize{8}, td{nullptr} {}// sets default parameters of the board 
@@ -17,6 +18,8 @@ Board::~Board() { // nothing might actually need to be done here as nothing uses
   p2links.clear();
   boardSize = 0;
   delete td;
+  delete p1;
+  delete p2;
 }
 
 void Board::init() { // initializes board with empty links and attaches textDisplay
@@ -41,6 +44,8 @@ void Board::init() { // initializes board with empty links and attaches textDisp
   }
   // add observers
   td = new TextDisplay();
+  p1 = new Player(1);
+  p2 = new Player(2);
   // gd = new GraphicDisplay();
 
   // need to attach as observers 
@@ -150,7 +155,11 @@ bool Board::isFirewall(int x, int y) const {
   return false;
 } */
 
-bool Board::getData(int playerNum, int linkNum) {
+void Board::setPlayerTurn(int player) {
+  playerTurn = player;
+}
+
+bool Board::getData(int playerNum, int linkNum) const {
   if (playerNum == 1) {
     return p1links.at(linkNum).getData();
   } else if (playerNum == 2) {
@@ -161,7 +170,7 @@ bool Board::getData(int playerNum, int linkNum) {
   }
 }
 
-int Board::getStrength(int playerNum, int linkNum) {
+int Board::getStrength(int playerNum, int linkNum) const {
   if (playerNum == 1) {
     return p1links.at(linkNum).getStrength();
   } else if (playerNum == 2) {
@@ -169,6 +178,18 @@ int Board::getStrength(int playerNum, int linkNum) {
   } else {
     cout << "invalid playerNum" << endl;
     return 0;
+  }
+}
+
+int Board::getPlayerTurn() const {
+  return playerTurn;
+}
+
+Player* Board::getPlayer(int player) const {
+  if (player == 1) {
+    return p1; 
+  } else { // player == 2
+    return p2;
   }
 }
 
@@ -182,9 +203,61 @@ bool Board::isValidPosition(int x, int y) const {
   return true;
 }
 
-ostream &operator<<(ostream &out, const Board &g) { // Not done, still thinking about it 
+void Board::printLink(int playerNum, int linkNum, int playerTurn) const {
+  if (playerNum == 1) {
+    p1links.at(linkNum).print(playerTurn);
+  } else if (playerNum == 2) {
+    p2links.at(linkNum).print(playerTurn);
+  } else {
+    cout << "invalid playerNum" << endl;
+  }
+}
+
+ostream &operator<<(ostream &out, const Board &b) { 
   // out << "entered board print function" << endl;
-  out << *g.td;
+  out << "Player 1:" << endl; // printing out player 1 info
+  out << "Downloaded: " << b.getPlayer(2)->getDownloadedDataCount() << "D, " << b.getPlayer(2)->getDownloadedVirusCount() << "V" << endl; 
+  out << "Abilities: " << b.getPlayer(2)->getAbilityCount() << endl;
+  if (b.getPlayerTurn() == 1) {
+    for (int i = 0; i < 8; i++) { 
+      out << char(i + 'a') << ": ";
+      b.printLink(1, i, 1);
+      if (i == 3) {
+        out << endl;
+      }
+    }
+  } else { // p2 turn
+    for (int i = 0; i < 8; i++) { 
+      cout << char(i + 'a') << ": ";
+      b.printLink(1, i, 2);
+      if (i == 3) {
+        out << endl;
+      }
+    }
+  }
+  out << endl;
+  out << *b.td;
+  out << "Player 2:" << endl; // printing out player 2 info
+  out << "Downloaded: " << b.getPlayer(2)->getDownloadedDataCount() << "D, " << b.getPlayer(2)->getDownloadedVirusCount() << "V" << endl; 
+  out << "Abilities: " << b.getPlayer(2)->getAbilityCount() << endl;
+  if (b.getPlayerTurn() == 1) {
+    for (int i = 0; i < 8; i++) { 
+      out << char(i + 'A') << ": ";
+      b.printLink(2, i, 1);
+      if (i == 3) {
+        out << endl;
+      }
+    }
+  } else { // p2 turn
+    for (int i = 0; i < 8; i++) { 
+      cout << char(i + 'A') << ": ";
+      b.printLink(2, i, 2);
+      if (i == 3) {
+        out << endl;
+      }
+    }
+  }
+  
   return out;
 }
 

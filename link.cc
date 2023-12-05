@@ -37,9 +37,36 @@ void Link::setStrength(int strength) {
     this->strength = strength;
 }
 
-/* void Link::setEmpty(bool empty) {
-    this.empty = empty;
-} */
+// start of accessor methods 
+
+int Link::getXCoord() const {
+    return xcoord;
+}
+
+int Link::getYCoord() const {
+    return ycoord;
+}
+
+int Link::getOwner() const {
+    if (player1owns) {
+        return 1;
+    } else {
+        return 2;
+    }
+} 
+
+bool Link::getVisibility() const {
+    return visible;
+}
+
+bool Link::getData() const {
+    return isData;
+}
+
+int Link::getStrength() const {
+    // cout << "strength in link: " << strength << endl;
+    return strength;
+}
 
 void Link::moveLink(std::string dir) {
     // might need to check if this is a valid new coord
@@ -71,37 +98,32 @@ void Link::moveLink(std::string dir) {
     }
 }
 
-int Link::getXCoord() {
-    return xcoord;
-}
-
-int Link::getYCoord() {
-    return ycoord;
-}
-
-int Link::getOwner() {
-    if (player1owns) {
-        return 1;
-    } else {
-        return 2;
+void Link::print(int playerTurn) const {
+    if (playerTurn == 1) {
+        if (player1owns || (!player1owns && visible)) {
+            if (isData) {
+                cout << "D";
+            } else { // is a virus
+                cout << "V";
+            }
+            cout << strength << " ";
+        } else { // p2owns and not visible
+            cout << "? ";
+        }
+    } else { // playerTurn == 2
+        if (!player1owns || (player1owns && visible)) {
+            if (isData) {
+                cout << "D";
+            } else { // is a virus
+                cout << "V";
+            }
+            cout << strength << " ";
+        } else { // p1owns and not visible
+            cout << "? ";
+        }
     }
-} 
-
-bool Link::getVisibility() {
-    return visible;
 }
 
-bool Link::getData() {
-    return isData;
-}
 
-int Link::getStrength() {
-    // cout << "strength in link: " << strength << endl;
-    return strength;
-}
-
-/* bool Link::getEmpty() {
-    return empty;
-} */
 
 

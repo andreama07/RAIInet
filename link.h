@@ -10,7 +10,6 @@ class Link {
     bool visible; // starts of not visible by opponent, turns true if identity/strength is revealed
     bool isData; // true if Link is data, false if Link is virus
     int strength; // must be an int from 1-4 inclusive
-    // bool empty; // true if this is a placeholder spot on the board, false if the link is data or virus
 
 public: 
 
@@ -23,20 +22,20 @@ public:
     void setVisibility(bool visible); // sets visible field
     void setData(bool contents); // sets isData field
     void setStrength(int strength); // sets strength field
-    // void setEmpty(bool empty); // sets empty field
 
     // accessor functions
-    int getXCoord(); 
-    int getYCoord();
-    int getOwner(); 
-    bool getVisibility(); 
-    bool getData(); 
-    int getStrength(); 
-    // bool getEmpty();
+    int getXCoord() const; 
+    int getYCoord() const;
+    int getOwner() const; 
+    bool getVisibility() const; 
+    bool getData() const; 
+    int getStrength() const; 
 
     // link movement
     void moveLink(std::string dir); // dir is one of up, down, left, right
 
+    // printing link info
+    void print(int playerTurn) const;
     // want to have all the ability methods here
 
 };

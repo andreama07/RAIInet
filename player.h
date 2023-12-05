@@ -8,8 +8,7 @@
 
 class Player {
     int playerNum;
-    // std::vector<Link*> links; // links probably just go in board
-    // std::vector<AbilityVisitor*> abilities; // need to figure out where abilities go
+    std::vector<char> abilities; // need to figure out where abilities go
     int downloadedDataCount;
     int downloadedVirusCount;
     int abilityCount;

@@ -4,6 +4,7 @@
 #include "link.h"
 #include "firewall.h"
 #include "textdisplay.h"
+#include "player.h"
 //#include "Direction"
 #include <vector>
 #include <string>
@@ -15,6 +16,9 @@ class Board {
     std::vector<std::vector<Firewall>> firewalls; // 2D vector of Firewalls
     int boardSize; 
     TextDisplay* td;
+    Player* p1;
+    Player* p2;
+    int playerTurn;
     // Helper method
     bool isWithinBounds(int x, int y) const;
     
@@ -32,18 +36,22 @@ public:
     void removeLink(int x, int y); // downloading is basically removing it, and just updating the download section
     void activateFirewall(int x, int y, int playerNumber);
     bool isFirewall(int x, int y) const;
+    void setPlayerTurn(int player);
 
     // board accessor methods
-    bool getData(int playerNum, int linkNum);
-    int getStrength(int playerNum, int linkNum);
+    bool getData(int playerNum, int linkNum) const;
+    int getStrength(int playerNum, int linkNum) const;
+    int getPlayerTurn() const;
+    Player* getPlayer(int player) const;
 
     // Utility methods for checking board state
     bool isSquareOccupied(int x, int y) const;
     bool isValidPosition(int x, int y) const;
 
     // Other methods related to board management
+    void printLink(int playerNum, int linkNum, int playerTurn) const;
     
-    friend std::ostream &operator<<(std::ostream &out, const Board &g);
+    friend std::ostream &operator<<(std::ostream &out, const Board &b);
 
 };
 

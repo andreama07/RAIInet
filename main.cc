@@ -90,9 +90,10 @@ int main (int argc, char *argv[]) {
 
     // Player p;
 
-    for(int i = 0; i < argc; i++) {
-       cout << i << " " << argv[i] << endl;
-    }
+    // outputting command line arguments for testing
+    // for(int i = 0; i < argc; i++) {
+    //    cout << i << " " << argv[i] << endl;
+    // }
 
     Board b;
     b.init();
@@ -149,12 +150,7 @@ int main (int argc, char *argv[]) {
             }
         }
     }
-    for (int i = 0; i < 8; i++) {
-        cout << "P1 Link: " << i << " is " << b.getData(1, i) << " Strength: " << b.getStrength(1, i) << endl;
-    }
-    for (int i = 0; i < 8; i++) {
-        cout << "P2 Link: " << i << " is " << b.getData(2, i) << " Strength: " << b.getStrength(2, i) << endl;
-    }
+    // output textdisplay
     cout << b << endl;
 
     // take in the commands

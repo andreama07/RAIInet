@@ -46,7 +46,7 @@ TextDisplay::~TextDisplay() {
 }
 
 ostream &operator<<(ostream &out, const TextDisplay &td) {
-  out << "entered td print function" << endl;
+  // out << "entered td print function" << endl;
   for (int i = 0; i < td.boardSize; i++) {
     for (int j = 0; j < td.boardSize; j++) {
       out << td.theDisplay.at(i).at(j);
