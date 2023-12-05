@@ -83,29 +83,44 @@ void Board::moveLink(char link, string dir) {
     linkNum = link - 'a';
     x = p1links.at(linkNum).getXCoord();
     y = p1links.at(linkNum).getYCoord();
+    p1links.at(linkNum).setPrevCoords(x, y); // keeping track of coords before moving
+    if (dir.compare("up") == 0) {
+      x--;
+    } else if (dir.compare("down") == 0) {
+      x++;
+    } else if (dir.compare("left") == 0) {
+      y--;
+    } else if (dir.compare("right") == 0) {
+      y++;
+    }
+    p1links.at(linkNum).setCoords(x, y); // updating coords after moving
+    td->notify(p1links.at(linkNum));
   } else {
     linkNum = link - 'A';
     x = p2links.at(linkNum).getXCoord();
     y = p2links.at(linkNum).getYCoord();
-  }
-  if (dir.strcmp("up") == 0) {
-      y++;
-    } else if (dir.strcmp("down") == 0) {
-      y--;
-    } else if (dir.strcmp("left") == 0) {
+    p2links.at(linkNum).setPrevCoords(x, y); // keeping track of coords before moving
+    if (dir.compare("up") == 0) {
       x--;
-    } else if (dir.strcmp("right") == 0) {
+    } else if (dir.compare("down") == 0) {
       x++;
+    } else if (dir.compare("left") == 0) {
+      y--;
+    } else if (dir.compare("right") == 0) {
+      y++;
     }
+    p2links.at(linkNum).setCoords(x, y); // updating coords after moving
+    td->notify(p2links.at(linkNum));
+  }
+  
   // probably need to set old coords to update td
-
+  
   // Handle the case where the destination is occupied
   // if (isSquareOccupied(endX, endY)) {
     // battle will happen here
     // return 3; 
-    cout << "battle needs to occur" << endl;
-
-  td.notify();
+  // cout << "battle needs to occur" << endl;
+  cout << *td << endl;
 
 } 
 
@@ -174,16 +189,16 @@ Player* Board::getPlayer(int player) const {
 }
 
 bool Board::occupiedByOwn(int x, int y) const {
-  occupied = false;
+  bool occupied = false;
   if (playerTurn == 1) {
-    for (int i = 0; i < p1links.size(); i++) {
-      if (p1links.at(i).getXCoord == x && p1links.at(i).getYCoord() == y) {
+    for (long unsigned int i = 0; i < p1links.size(); i++) {
+      if (p1links.at(i).getXCoord() == x && p1links.at(i).getYCoord() == y) {
         occupied = true;
       }
     }
   } else { // playerTurn == 2
-    for (int i = 0; i < p2links.size(); i++) {
-      if (p2links.at(i).getXCoord == x && p2links.at(i).getYCoord() == y) {
+    for (long unsigned int i = 0; i < p2links.size(); i++) {
+      if (p2links.at(i).getXCoord() == x && p2links.at(i).getYCoord() == y) {
         occupied = true;
       }
     }
@@ -202,18 +217,24 @@ bool Board::isValidMove(char link, string dir) const {
     x = p2links.at(linkNum).getXCoord();
     y = p2links.at(linkNum).getYCoord();
   }
-  if (dir.stcmp("up") == 0) {
-    y++;
-  } else if (dir.strcmp("down") == 0) {
-    y--;
-  } else if (dir.strcmp("left") == 0) {
+  if (dir.compare("up") == 0) {
     x--;
-  } else if (dir.strcmp("right") == 0) {
+    cout << "moving up: " << x << ", " << y << endl;
+  } else if (dir.compare("down") == 0) {
     x++;
+    cout << "moving down " << x << ", " << y << endl;
+  } else if (dir.compare("left") == 0) {
+    y--;
+    cout << "moving left " << x << ", " << y << endl;
+  } else if (dir.compare("right") == 0) {
+    y++;
+    cout << "moving right " << x << ", " << y << endl;
   }
   if (y < 0 || y >= boardSize || x < 0 || x >= boardSize) { // check if new position is within the board
+    cout << "coords outside of board" << endl;
     return false;
   } else if (occupiedByOwn(x, y)) { // check if new position already has one of player's pieces
+    cout << "occupiedByOwn" << endl;
     return false;
   }
   return true;

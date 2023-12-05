@@ -31,14 +31,21 @@ TextDisplay::TextDisplay() : boardSize{8} {
 }
 
 void TextDisplay::notify(Link &l) {
+  cout << "entered notify function in td" << endl;
   // implement the textdisplay
-  int x = l.getXCoord();
-  int y = l.getYCoord();
-  // if (l.getState()) { // if on
-  //   theDisplay.at(x).at(y) = 'X';
-  // } else { // if off
-  //   theDisplay.at(x).at(y) = '_';
-  // }
+  // set old coordinates to an empty char
+  int prevX = l.getPrevX();
+  int prevY = l.getPrevY();
+  char prevChar = theDisplay.at(prevX).at(prevY);
+  theDisplay.at(prevX).at(prevY) = '.';
+  cout << "set old coords" << endl;
+
+  // move link to new spot on td
+  int curX = l.getXCoord();
+  int curY = l.getYCoord();
+  cout << "new coords: " << curX << ", " << curY << endl; 
+  theDisplay.at(curX).at(curY) = prevChar;
+  cout << "about to leave notify function" << endl;
 }
 
 TextDisplay::~TextDisplay() {

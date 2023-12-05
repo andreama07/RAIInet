@@ -10,6 +10,8 @@ class Link {
     bool visible; // starts of not visible by opponent, turns true if identity/strength is revealed
     bool isData; // true if Link is data, false if Link is virus
     int strength; // must be an int from 1-4 inclusive
+    int prevX;
+    int prevY;
 
 public: 
 
@@ -22,6 +24,7 @@ public:
     void setVisibility(bool visible); // sets visible field
     void setData(bool contents); // sets isData field
     void setStrength(int strength); // sets strength field
+    void setPrevCoords(int x, int y); // set the prevX and prevY fields
 
     // accessor functions
     int getXCoord() const; 
@@ -30,6 +33,8 @@ public:
     bool getVisibility() const; 
     bool getData() const; 
     int getStrength() const; 
+    int getPrevX() const;
+    int getPrevY() const;
 
     // link movement
     void moveLink(std::string dir); // dir is one of up, down, left, right

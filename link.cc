@@ -37,6 +37,11 @@ void Link::setStrength(int strength) {
     this->strength = strength;
 }
 
+void Link::setPrevCoords(int x, int y) {
+    prevX = x;
+    prevY = y;
+}
+
 // start of accessor methods 
 
 int Link::getXCoord() const {
@@ -66,6 +71,14 @@ bool Link::getData() const {
 int Link::getStrength() const {
     // cout << "strength in link: " << strength << endl;
     return strength;
+}
+
+int Link::getPrevX() const {
+    return prevX;
+}
+
+int Link::getPrevY() const {
+    return prevY;
 }
 
 void Link::moveLink(std::string dir) {

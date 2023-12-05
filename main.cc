@@ -65,7 +65,7 @@ void display_board() {
 
 // helper functions for main
 bool isValidDir(string dir) {
-    if (dir.strcmp("up") == 0 || dir.strcmp("down") == 0 || dir.strcmp("left") == 0|| dir.strcmp("right") == 0) {
+    if (dir.compare("up") == 0 || dir.compare("down") == 0 || dir.compare("left") == 0|| dir.compare("right") == 0) {
         return true;
     } else {
         return false;
@@ -156,8 +156,10 @@ int main (int argc, char *argv[]) {
                 cin >> dir;
                 if (b.isValidLink(link)) {
                     if (isValidDir(dir)) {
-                        if (isValidMove(link, dir)) {
-                            b.move(link, dir);
+                        if (b.isValidMove(link, dir)) {
+                            cout << "everything good, about to move" << endl;
+                            b.moveLink(link, dir);
+                            cout << "finished move" << endl;
                         } else {
                             cout << "not a valid move" << endl;
                             continue;
