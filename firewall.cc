@@ -15,14 +15,10 @@ bool Firewall::firewallAffect(Link &link) {
             // download the link
 
         } else {
-            
+
         }
     }
 
 }
-
-
-
-
 
 

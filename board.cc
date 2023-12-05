@@ -4,7 +4,7 @@
 #include "board.h"
 using namespace std;
 
-Board::Board() : boardSize{8}, td{nullptr} { // initializes the board 
+Board::Board() { // initializes the board 
   board.resize(boardSize, std::vector<Link*>(boardSize, nullptr)); 
   firewalls.resize(boardSize, std::vector<bool>(boardSize, false)); 
 }
@@ -19,35 +19,16 @@ Board::~Board() { // nothing might actually need to be done here as nothing uses
     board.at(i).clear();
   }
   boardSize = 0;
-  delete td;
+  // delete td;
 }
 
 void Board::init() { // might not actually need this 
-  for (int i = 0; i < boardSize; i++) { // sets player 1's 8 links
-    Link link;
-    if (i == 4 || i == 5) {
-      link.setCoords(1, i);
-    } else {
-      link.setCoords(0, i);
-    }
-    // board.at(i).emplace_back(link);
-    p1links.emplace_back(link);
-  }
 
-  for (int i = 0; i < boardSize; i++) { // sets player 1's 8 links
-    Link link;
-    if (i == 4 || i == 5) {
-      link.setCoords(6, i);
-    } else {
-      link.setCoords(7, i);
-    }
-    board.at(i).emplace_back(link);
-    p2links.emplace_back(link);
-  }
 
-  // add observers
-  td = new TextDisplay();
+  // add observers?
+  //td = new TextDisplay(n);
   // need to attach as observers 
+  // helloo
 
   
 }
@@ -65,7 +46,7 @@ bool Board::placeLink(int x, int y, Link& link) {
   return true; 
 }
 
-bool Board::moveLink(int startX, int startY, std::string dir) { // we are going to assume that the user is going to write up, down... or are we going by north, south...
+int Board::moveLink(int startX, int startY, std::string dir) { // we are going to assume that the user is going to write up, down... or are we going by north, south...
   int endY = startY; 
   int endX = startX;
 
@@ -79,24 +60,24 @@ bool Board::moveLink(int startX, int startY, std::string dir) { // we are going 
   } else if (dir == "right") {
     ++endX;
   } else {
-    return false;
+    return 1; // no valid direction 
   } 
 
 
 // Check if both start and end positions are within bounds
-  if (!isValidPosition(startX, startY) || !isValidPosition(endX, endY)) {
-    return false; // position not valid
+  if (!isValidPosition(endX, endY)) {
+    return 2; // end position not valid
   }
 
   // Check if the starting position is occupied by a link
-  if (!isSquareOccupied(startX, startY)) {
-    return false; // No link at the starting position
-  }
+ // if (!isSquareOccupied(startX, startY)) {
+ //   return false; // No link at the starting position
+ // }
 
   // Handle the case where the destination is occupied
   if (isSquareOccupied(endX, endY)) {
     // battle will happen here
-    return false;
+    return 3; // battle needs to occur 
   }
 
   // Move the link

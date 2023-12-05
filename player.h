@@ -7,18 +7,18 @@
 #include "AbilityVisitor.h"
 
 class Player {
-    int playerNum;
-    std::vector<Link> links;
+    // int playerNum; doesn't have to be here 
+    std::vector<Link*> links;
     std::vector<AbilityVisitor*> abilities;
-    int downloadedDataCount;
-    int downloadedVirusCount;
-    int abilitiyCount;
+    //int downloadedDataCount;
+    //int downloadedVirusCount;
+   // int abilitiyCount;
 
     // Other methods needed
 
 public:
 
-    Player(const); // should it be MIL initialized????
+    Player(); // should it be MIL initialized????
 
     // Methods for link management
     void addLink(const Link& link);
