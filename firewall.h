@@ -6,14 +6,14 @@ class Firewall {
     int xcoord;
     int ycoord;
     bool isActive; 
-    int PlayerNum; 
+    int playerNum; 
 
 
 public:
-    Firewall();
+    Firewall(int x, int y, int playerNum);
     ~Firewall();
 
-    bool firewallAffect(Link &link); 
+    void firewallAffect(Link &link); 
 
 };
 

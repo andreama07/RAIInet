@@ -3,39 +3,31 @@
 
 #include <vector>
 #include <string>
-#include "Link.h"
-#include "AbilityVisitor.h"
+#include "link.h"
+#include "abilityvisitor.h"
 
 class Player {
-    // int playerNum; doesn't have to be here 
-    std::vector<Link*> links;
-    std::vector<AbilityVisitor*> abilities;
-    //int downloadedDataCount;
-    //int downloadedVirusCount;
-   // int abilitiyCount;
+    int playerNum;
+    // std::vector<Link*> links; // links probably just go in board
+    // std::vector<AbilityVisitor*> abilities; // need to figure out where abilities go
+    int downloadedDataCount;
+    int downloadedVirusCount;
+    int abilityCount;
 
     // Other methods needed
 
 public:
 
-    Player(); // should it be MIL initialized????
-
-    // Methods for link management
-    void addLink(const Link& link);
-    Link& getLink(int linkId);
-    const std::vector<Link>& getLinks() const;
-
-    // Methods for ability management
-    void addAbility(AbilityVisitor* ability);
-    AbilityVisitor* getAbility(int abilityId);
-    void useAbility(int abilityId, Link& targetLink);
-    void useAbility(int abilityId, GameBoard& targetBoard);
-
+    Player(int playerNum); 
+    ~Player();
     // Game status methods
+    int getPlayerNum() const;
     int getDownloadedDataCount() const;
     int getDownloadedVirusCount() const;
+    int getAbilityCount() const;
     void incrementDownloadedData();
     void incrementDownloadedVirus();
+    void decrementAbilityCount();
 
     // Other player-specific methods
 

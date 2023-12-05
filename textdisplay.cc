@@ -4,12 +4,12 @@
 
 using namespace std;
 
-TextDisplay::TextDisplay(int n) : boardSize{n} {
-  for (int i = 0; i < n; i++) {
+TextDisplay::TextDisplay() : boardSize{8} {
+  for (int i = 0; i < boardSize; i++) {
     vector<char> row;
     theDisplay.emplace_back(row);
-    for (int j = 0; j < n; j++) {
-      theDisplay.at(i).emplace_back('_');
+    for (int j = 0; j < boardSize; j++) {
+      theDisplay.at(i).emplace_back('.');
     }
   }
 }

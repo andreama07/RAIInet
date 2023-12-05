@@ -4,10 +4,8 @@
 #include "board.h"
 using namespace std;
 
-Board::Board() { // initializes the board 
-  board.resize(boardSize, std::vector<Link*>(boardSize, nullptr)); 
-  firewalls.resize(boardSize, std::vector<bool>(boardSize, false)); 
-}
+Board::Board() : boardSize{8}, td{nullptr} {}// sets default parameters of the board 
+
 
 bool Board::isWithinBounds(int x, int y) const { // this function is done 
   // need a size filed
@@ -15,38 +13,55 @@ bool Board::isWithinBounds(int x, int y) const { // this function is done
 }
 
 Board::~Board() { // nothing might actually need to be done here as nothing uses "new"
-  for (int i = 0; i < boardSize; i++) {
-    board.at(i).clear();
-  }
+  p1links.clear();
+  p2links.clear();
   boardSize = 0;
-  // delete td;
+  delete td;
 }
 
-void Board::init() { // might not actually need this 
+void Board::init() { // initializes board with empty links and attaches textDisplay
 
+  for (int i = 0; i < boardSize; i++) { // sets player 1's 8 links
+    Link link;
+    if (i == 4 || i == 5) {
+      link.setCoords(1, i);
+    } else {
+      link.setCoords(0, i);
+    }
+    p1links.emplace_back(link);
+  }
+  for (int i = 0; i < boardSize; i++) { // sets player 1's 8 links
+    Link link;
+    if (i == 4 || i == 5) {
+      link.setCoords(6, i);
+    } else {
+      link.setCoords(7, i);
+    }
+    p2links.emplace_back(link);
+  }
+  // add observers
+  td = new TextDisplay();
+  // gd = new GraphicDisplay();
 
-  // add observers?
-  //td = new TextDisplay(n);
   // need to attach as observers 
-  // helloo
 
-  
+
 }
 
-bool Board::placeLink(int x, int y, Link& link) {
+void Board::placeLink(int x, int y, Link& link) {
   if (!isWithinBounds(x, y)) {
-    return false; // out of bounds, might not be able to use placeLink when working with the download fucntion
+    // return false; // out of bounds, might not be able to use placeLink when working with the download fucntion
   }
 
   if (isSquareOccupied(x,y)) {
-    return false; // square is occupied, would need to use this for the battle function
+    // return false; // square is occupied, would need to use this for the battle function
   }
 
-  board[x][y] = &link; 
-  return true; 
+  // board[x][y] = &link; 
+  // return true; 
 }
 
-int Board::moveLink(int startX, int startY, std::string dir) { // we are going to assume that the user is going to write up, down... or are we going by north, south...
+void Board::moveLink(int startX, int startY, std::string dir) { // we are going to assume that the user is going to write up, down... or are we going by north, south...
   int endY = startY; 
   int endX = startX;
 
@@ -60,13 +75,15 @@ int Board::moveLink(int startX, int startY, std::string dir) { // we are going t
   } else if (dir == "right") {
     ++endX;
   } else {
-    return 1; // no valid direction 
+    // return 1; 
+    cout << "no valid direction given" << endl;
   } 
 
 
 // Check if both start and end positions are within bounds
   if (!isValidPosition(endX, endY)) {
-    return 2; // end position not valid
+    // return 2; 
+    cout << "end position not valid" << endl;
   }
 
   // Check if the starting position is occupied by a link
@@ -77,47 +94,50 @@ int Board::moveLink(int startX, int startY, std::string dir) { // we are going t
   // Handle the case where the destination is occupied
   if (isSquareOccupied(endX, endY)) {
     // battle will happen here
-    return 3; // battle needs to occur 
+    // return 3; 
+    cout << "battle needs to occur" << endl;
   }
 
   // Move the link
-  board[endX][endY] = board[startX][startY];
-  board[startX][startY] = nullptr;
-  return true;
+  // board[endX][endY] = board[startX][startY];
+  // board[startX][startY] = nullptr;
+  // return true;
 } 
 
 Link* Board::getLinkAt(int x, int y) {
   if (isWithinBounds(x, y)) {
-    return board[x][y];
+    //return board[x][y];
   }
   return nullptr;
 }
 
 void Board::removeLink(int x, int y) {
   if (isWithinBounds(x, y)) {
-    board[x][y] = nullptr; 
+    //board[x][y] = nullptr; 
   }
 }
 
-void Board::activateFirewall(int x, int y, int playerNumber) {
+/* void Board::activateFirewall(int x, int y, int playerNumber) {
   if (isWithinBounds(x,y)) {
     firewall[x][y] = std::make_unique<Firewall>(x, y, playerNumber);
   }
-}
+} 
 
 bool Board::isFirewall(int x, int y) const {
   if (isWithinBounds(x, y)) {
     return firewalls[x][y];
   }
   return false;
-}
+} */
 
 bool Board::isSquareOccupied(int x, int y) const {
-  return isWithinBounds(x,y) && board[x][y] != nullptr;
+  // return isWithinBounds(x,y) && board[x][y] != nullptr;
+  return false;
 }
 
 bool Board::isValidPosition(int x, int y) const {
-  return ((x <= boardSize - 1 && x >= 0) && (y <= boardSize && y >= -1));
+  // return ((x <= boardSize - 1 && x >= 0) && (y <= boardSize && y >= -1));
+  return true;
 }
 
 ostream &operator<<(ostream &out, const Board &g) { // Not done, still thinking about it 

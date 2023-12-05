@@ -26,7 +26,7 @@ void Link::setOwner(int owner) {
 }
 
 void Link::setVisibility(bool visible) {
-    this.visible = visible;
+    this->visible = visible;
 }
 
 void Link::setData(bool contents) {
@@ -34,7 +34,7 @@ void Link::setData(bool contents) {
 }
 
 void Link::setStrength(int strength) {
-    this.strength = strength;
+    this->strength = strength;
 }
 
 /* void Link::setEmpty(bool empty) {

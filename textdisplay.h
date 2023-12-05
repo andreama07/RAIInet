@@ -8,7 +8,7 @@ class Link;
 
 class TextDisplay: public Observer {
   std::vector<std::vector<char>> theDisplay;
-  const int boardSize = 8;
+  int boardSize;
 
 public:
   TextDisplay();

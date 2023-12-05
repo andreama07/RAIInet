@@ -25,7 +25,7 @@ public:
     // Methods for setting up and managing the board
     void init(); // might not need this 
     void placeLink(int x, int y, Link& link);
-    bool moveLink(int startX, int startY, std::string dir);
+    void moveLink(int startX, int startY, std::string dir);
     Link* getLinkAt(int x, int y);
     void removeLink(int x, int y); // downloading is basically removing it, and just updating the download section
     void activateFirewall(int x, int y, int playerNumber);

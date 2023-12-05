@@ -1,15 +1,12 @@
-#include <gameControl.h>
-#include <board.h>
+#include "gameControl.h"
+#include "board.h"
 
 gameControl::gameControl() {}
 
 gameControl::~gameControl() {}
 
-    // put this in a function??
-    Board b;
-  // interactions
-void Interact() {
-    while (true) {
+void gameControl::Interact() {
+    /* while (true) {
         cin >> command;
         if (command == "move") {
             // make sure the next is a calid link for the player
@@ -58,6 +55,6 @@ void Interact() {
         else if (command == "quit") {
             // exit game
         }
-    }
+    } */
 }
 
