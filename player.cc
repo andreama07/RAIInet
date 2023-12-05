@@ -38,6 +38,10 @@ int Player::getAbilityCount() const {
     return abilityCount;
 }
 
+char Player::getAbility(int id) const { // id is an int from 1-5, our vector has indices 0-4
+    return abilities.at(id - 1);
+}
+
 // updating methods
 
 void Player::setAbility(int id, char letter) { // id is an int from 0-4 already

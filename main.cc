@@ -181,6 +181,64 @@ int main (int argc, char *argv[]) {
                 }
             } else if (command == "ability") {
                 cout << "use a specific ability" << endl;
+                int ID;
+                char ab;
+                cin >> ID;
+                if (b.getPlayerTurn() == 1) {
+                    ab = b.getPlayer(1)->getAbility(ID);
+                    if (ab == 'L') {
+                        // implement link boost
+                        char link;
+                        cin >> link;
+                    } else if (ab == 'F') {
+                        //implement firewall
+
+                    } else if (ab == 'D') {
+                        //implement download
+                        char link;
+                        cin >> link;
+                        if (b.getPlayerTurn() == 1) {
+                            if (link >= 'A'  && link <='H') { // valid opponent link (need to check if already downloaded)
+                                // download and update player fields + td
+                            } else {
+                                cout << "invalid opponent link to download" << endl;
+                                continue;
+                            }
+                        } else { // player2 turn
+                            if (link >= 'a'  && link <='h') { // valid opponent link (need to check if already downloaded)
+                                // download and update player fields + td
+                            } else {
+                                cout << "invalid opponent link to download" << endl;
+                                continue;
+                            }
+                        }
+                        // update player fields, update td
+                        
+
+                    } else if (ab == 'S') {
+                        //implement scan
+                        char link;
+                        cin >> link;
+                        if (link >= 'a' && link <= 'h') {
+                            p1links.at(link-'a').setVisibility(true);
+                        } else if (link >= 'A' && link <= 'H') {
+                            p2links.at(link-'A').setVisibility(true);
+                        } else {
+                            cout << "invalid link to scan" << endl;
+                            continue
+                        }
+                        // need to update player fields
+                        //update td
+                        g.td->notify();
+                    } else if (ab == 'P') {
+                        //implement polarize
+
+                    } // can add more abilities here
+                } else { // player2 turn
+                    ab = b.getPlayer(2)->getAbility(ID);
+                }
+                
+
             } else if (command == "board") {
                 // cout << "print out the board" << endl;
                 cout << b << endl;

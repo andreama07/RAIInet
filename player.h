@@ -25,6 +25,7 @@ public:
     int getDownloadedDataCount() const;
     int getDownloadedVirusCount() const;
     int getAbilityCount() const;
+    char getAbility(int id) const;
 
     void setAbility(int id, char letter);
     void setUsed(int id);
