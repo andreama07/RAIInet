@@ -17,9 +17,9 @@ Board::~Board() { // nothing might actually need to be done here as nothing uses
   p1links.clear();
   p2links.clear();
   boardSize = 0;
-  delete td;
-  delete p1;
-  delete p2;
+  // td = nullptr;
+  // p1 = nullptr;
+  // p2 = nullptr;
 }
 
 void Board::init() { // initializes board with empty links and attaches textDisplay
