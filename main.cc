@@ -187,37 +187,25 @@ int main (int argc, char *argv[]) {
                 if (b.getPlayerTurn() == 1) {
                     ab = b.getPlayer(1)->getAbility(ID);
                     if (ab == 'L') {
+                        cout << "enter link boost" << endl;
                         // implement link boost
                         char link;
                         cin >> link;
                     } else if (ab == 'F') {
+                        cout << "enter firewall" << endl;
                         //implement firewall
 
                     } else if (ab == 'D') {
+                        cout << "enter download" << endl;
                         //implement download
                         char link;
                         cin >> link;
-                        if (b.getPlayerTurn() == 1) {
-                            if (link >= 'A'  && link <='H') { // valid opponent link (need to check if already downloaded)
-                                // download and update player fields + td
-                            } else {
-                                cout << "invalid opponent link to download" << endl;
-                                continue;
-                            }
-                        } else { // player2 turn
-                            if (link >= 'a'  && link <='h') { // valid opponent link (need to check if already downloaded)
-                                // download and update player fields + td
-                            } else {
-                                cout << "invalid opponent link to download" << endl;
-                                continue;
-                            }
-                        }
-                        // update player fields, update td
-                        
-
+                        b.download(link, ID); // this returns a bool but we don't need to store it
+                        cout << b << endl;
                     } else if (ab == 'S') {
+                        cout << "enter scan" << endl;
                         //implement scan
-                        char link;
+                        /* char link;
                         cin >> link;
                         if (link >= 'a' && link <= 'h') {
                             p1links.at(link-'a').setVisibility(true);
@@ -229,8 +217,9 @@ int main (int argc, char *argv[]) {
                         }
                         // need to update player fields
                         //update td
-                        g.td->notify();
+                        g.td->notify(); */
                     } else if (ab == 'P') {
+                        cout << "enter polarize" << endl;
                         //implement polarize
 
                     } // can add more abilities here

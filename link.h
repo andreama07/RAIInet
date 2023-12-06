@@ -12,6 +12,7 @@ class Link {
     int strength; // must be an int from 1-4 inclusive
     int prevX;
     int prevY;
+    bool downloaded;
 
 public: 
 
@@ -25,6 +26,8 @@ public:
     void setData(bool contents); // sets isData field
     void setStrength(int strength); // sets strength field
     void setPrevCoords(int x, int y); // set the prevX and prevY fields
+    void setDownloaded(bool b); // set downloaded field
+    
 
     // accessor functions
     int getXCoord() const; 
@@ -35,6 +38,7 @@ public:
     int getStrength() const; 
     int getPrevX() const;
     int getPrevY() const;
+    bool getDownloaded() const;
 
     // link movement
     void moveLink(std::string dir); // dir is one of up, down, left, right

@@ -1,5 +1,6 @@
 #ifndef _OBSERVER_H_
 #define _OBSERVER_H_
+#include <string>
 
 class Link;
 
@@ -8,7 +9,7 @@ class Link;
 
 class Observer {
  public:
-  virtual void notify(Link &l) = 0;  // l is the Link that called the notify method
+  virtual void notify(Link &l, std::string action) = 0;  // l is the Link that called the notify method
   virtual ~Observer() = default;
 };
 #endif

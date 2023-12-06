@@ -30,21 +30,27 @@ TextDisplay::TextDisplay() : boardSize{8} {
   }
 }
 
-void TextDisplay::notify(Link &l) {
+void TextDisplay::notify(Link &l, string action) {
   // cout << "entered notify function in td" << endl;
   // implement the textdisplay
-  // set old coordinates to an empty char
-  int prevX = l.getPrevX();
-  int prevY = l.getPrevY();
-  char prevChar = theDisplay.at(prevX).at(prevY);
-  theDisplay.at(prevX).at(prevY) = '.';
-  // cout << "set old coords" << endl;
+  if (action.compare("moved") == 0) { // if link just moved, update that on td
+    // set old coordinates to an empty char
+    int prevX = l.getPrevX();
+    int prevY = l.getPrevY();
+    char prevChar = theDisplay.at(prevX).at(prevY);
+    theDisplay.at(prevX).at(prevY) = '.';
+    // cout << "set old coords" << endl;
 
-  // move link to new spot on td
-  int curX = l.getXCoord();
-  int curY = l.getYCoord();
-  // cout << "new coords: " << curX << ", " << curY << endl; 
-  theDisplay.at(curX).at(curY) = prevChar;
+    // move link to new spot on td
+    int curX = l.getXCoord();
+    int curY = l.getYCoord();
+    // cout << "new coords: " << curX << ", " << curY << endl; 
+    theDisplay.at(curX).at(curY) = prevChar;
+  } else if (action.compare("downloaded") == 0) { // link just got downloaded, update on td
+    int curX = l.getXCoord();
+    int curY = l.getYCoord();
+    theDisplay.at(curX).at(curY) = '.';
+  }
   // cout << "about to leave notify function" << endl;
 }
 

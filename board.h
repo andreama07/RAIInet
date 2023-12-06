@@ -48,6 +48,9 @@ public:
     bool isValidMove(char link, std::string dir) const;
     bool isValidLink(char c) const;
 
+    // Ability functions
+    bool download(char link, int abilityID);
+
     // Other methods related to board management
     void printLink(int playerNum, int linkNum, int playerTurn) const;
     

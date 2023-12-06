@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Link::Link() : visible{false} {}
+Link::Link() : visible{false}, downloaded{false} {}
 
 Link::~Link() {}
 
@@ -40,6 +40,10 @@ void Link::setStrength(int strength) {
 void Link::setPrevCoords(int x, int y) {
     prevX = x;
     prevY = y;
+}
+
+void Link::setDownloaded(bool b) {
+    downloaded = b;
 }
 
 // start of accessor methods 
@@ -80,6 +84,11 @@ int Link::getPrevX() const {
 int Link::getPrevY() const {
     return prevY;
 }
+
+bool Link::getDownloaded() const {
+    return downloaded;
+}
+
 
 void Link::moveLink(std::string dir) {
     // might need to check if this is a valid new coord

@@ -66,7 +66,7 @@ void Player::decrementAbilityCount() {
 
 void Player::printAbilities() {
     for (int i = 0; i < 5; i++) {
-        cout << "Ability " << i << ": ";
+        cout << "Ability " << i+1 << ": ";
         if (abilities.at(i) == 'L') {
             cout << "Link Boost - ";
         } else if (abilities.at(i) == 'F') {
