@@ -15,10 +15,20 @@ class Xwindow {
   Xwindow(int width=500, int height=500);  // Constructor; displays the window.
   ~Xwindow();                              // Destructor; destroys the window.
 
-  enum {White=0, Black, Red, Green, Blue}; // Available colours.
+  Xwindow(const Xwindow&) = delete;
+  Xwindow &operator=(const Xwindow&) = delete;
+
+  enum {White=0, Black, Red, Green, Blue, Yellow, Purple, Orange}; // Available colours.
+  // Black for unknown 
+  // Red for viruses
+  // Green for data
+  // Blue for firewall of 1
+  // Purple for firewall of 2
 
   // Draws a rectangle
-  void fillRectangle(int x, int y, int width, int height, int colour=Black);
+  void fillRectangle(int x, int y, int width, int height, int colour=Black); // might change to white instead
+  
+  void drawRectangle(int x, int y, int width, int height);
 
   // Draws a string
   void drawString(int x, int y, std::string msg);

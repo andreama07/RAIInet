@@ -4,6 +4,7 @@
 #include "link.h"
 #include "firewall.h"
 #include "textdisplay.h"
+#include "graphicsdisplay.h"
 #include "player.h"
 //#include "Direction"
 #include <vector>
@@ -16,6 +17,7 @@ class Board {
     std::vector<std::vector<Firewall>> firewalls; // 2D vector of Firewalls
     int boardSize; 
     TextDisplay* td;
+    GraphicsDisplay* gd;
     Player* p1;
     Player* p2;
     int playerTurn;
@@ -27,7 +29,9 @@ public:
     ~Board();
 
     // Methods for setting up and managing the board
-    void init(); 
+    void init(Xwindow &xw, int n); 
+    void init();
+    void setGraphicsDisplay(GraphicsDisplay* gd);
     void setData(int playerNum, int linkNum, bool isData);
     void setStrength(int playerNum, int linkNum, int strength);
     void moveLink(char link, std::string dir);

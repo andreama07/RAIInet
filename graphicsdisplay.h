@@ -1,27 +1,29 @@
 #ifndef __GRAPHICSDISPLAY_H__
 #define __GRAPHICSDISPLAY_H__
-#include "observer.h"
-#include "window.h"
+#include <iostream>
 #include <vector>
-class Cell;
+#include "observer.h"
+#include "link.h"
+#include "window.h"
+#include "firewall.h"
 
-class GraphicsDisplay : public Observer {
+class Link;
+
+class GraphicsDisplay: public Observer {
   Xwindow &xw; // Reference to the Xwindow object for graphical operations
-  int gridSize; // The size of the grid
+  int boardSize; // The size of the grid
   int cellSize; // Size of each cell in the window
-  std::vector<std::vector<bool>> theDisplay; // 2D vector to keep track of cell states
+  std::vector<std::vector<int>> theGraphic; // 2D vector to keep track of cell states
 
- public:
+public:
   GraphicsDisplay(Xwindow &xw, int n); // Constructor
 
- void notify(Cell &c) override;
- SubscriptionType subType() override;
+ void notify(Link &l, std::string action) override;
 
   ~GraphicsDisplay(); // Destructor
-
-  void clearDisplay(); // Clears the graphical display when needed
 
   void draw(); // redraws only the cells that have been changed
 };
 
 #endif
+

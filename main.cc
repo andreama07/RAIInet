@@ -7,6 +7,7 @@
 //#include "gameControl.h"
 #include "player.h"
 #include "textdisplay.h"
+#include "graphicsdisplay.h"
 
 using namespace std;
 
@@ -28,6 +29,7 @@ bool isValidDir(string dir) {
 
 // START OF MAIN FUNCTION
 int main (int argc, char *argv[]) {
+    Xwindow xw;
 
     // initialize the variables that are needed
     string ability1[5];
@@ -39,6 +41,7 @@ int main (int argc, char *argv[]) {
     // }
 
     Board b;
+    b.init(xw, 8);
     b.init();
     // setup for the game
     for(int i = 0; i < argc; i++) {
