@@ -10,48 +10,8 @@
 
 using namespace std;
 
-// ************ need help calling the abilities *******************
-/* void use_ability() {
-    int n;
-    cin >> n;
-    // uses ability with ID n 
-    string ab = ability1[n - 1];
 
-    // add a - if used
-    ability1[n-1] = "-" + "ab";
-    // firewall
-    if (ab == "F") {
-        int x;
-        int y;
-        cin >> x >> y;
-        // player num p
-        firewall(x, y, p);
-        
-    } else if (ab == "S") {
-        // scan
-        Link l;
-        cin >> l;
-        scan(l);
-    } else if (ab == "P") {
-        //polarize
-        Link l;
-        cin >> l;
-        polarize(l);
-    } else if (ab == "L") {
-        // link boost
-        Link l;
-        cin >> l;
-        linkboost(l);
-    } else if (ab == "D") {
-        // download
-        Link l;
-        cin >> l;
-        download(l);
-    }
-    // depending on ability, require further input
-}
-
-void display_board() {
+/* void display_board() {
     // need graphics display
 } */
 
@@ -191,6 +151,8 @@ int main (int argc, char *argv[]) {
                         // implement link boost
                         char link;
                         cin >> link;
+                        b.linkBoost(link, ID);
+                        cout << b << endl;
                     } else if (ab == 'F') {
                         cout << "enter firewall" << endl;
                         //implement firewall

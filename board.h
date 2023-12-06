@@ -36,7 +36,6 @@ public:
     void activateFirewall(int x, int y, int playerNumber);
     bool isFirewall(int x, int y) const;
     void setPlayerTurn(int player);
-    void useLinkBoost(int playerNum, int linkNum);
 
     // board accessor methods
     bool getData(int playerNum, int linkNum) const;
@@ -52,6 +51,7 @@ public:
     // Ability functions
     bool download(char link, int abilityID = 0);
     void scan(char link, int abilityID);
+    void linkBoost(char linkNum, int abilityID);
 
     // Other methods related to board management
     void printLink(int playerNum, int linkNum, int playerTurn) const;

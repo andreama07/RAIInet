@@ -74,26 +74,29 @@ void Board::setStrength(int playerNum, int linkNum, int strength) {
   }
 }
 
-void Board::useLinkBoost(int playerNum, int linkNum) { // LA added
-    std::vector<Link>* playerLinks;
-    if (playerNum == 1) {
-      playerLinks = &p1links;
+void Board::linkBoost(char link, int abilityID) { 
+  // Ensure linkNum is within bounds
+  int linkNum;
+  if (playerTurn == 1) {
+    if (link >= 'a' && link <= 'h') {
+      linkNum = link - 'a';
+      p1links.at(linkNum).setBoosted();
+      p1->decrementAbilityCount(); // used up one ability
+      p1->setUsed(abilityID); // set the linkBoost ability to used
     } else {
-      playerLinks = &p2links;
+      cout << "invalid link to boost" << endl;
     }
-
-    // Ensure linkNum is within bounds
-    if (linkNum < 0 || linkNum >= 5) {
-      return;
+  } else { // player2 turn
+    if (link >= 'A' && link <= 'H') {
+      linkNum = link - 'A';
+      p2links.at(linkNum).setBoosted();
+      p2->decrementAbilityCount(); // used up one ability
+      p2->setUsed(abilityID); // set the linkBoost ability to used
+    } else {
+      cout << "invalid link to boost" << endl;
     }
-
-    // Check if the ability is "Linkboost" for the specified link
-    if ((*playerLinks)[linkNum].getAbility() == "Linkboost") {
-      (*playerLinks)[linkNum].setBoosted();
-
   }
 }
-
 
 void Board::moveLink(char link, string dir) {
   int linkNum, x, y, initiatingPlayer;
@@ -105,25 +108,25 @@ void Board::moveLink(char link, string dir) {
     p1links.at(linkNum).setPrevCoords(x, y); // keeping track of coords before moving
     if (dir.compare("up") == 0) {
       if (p1links.at(linkNum).isBoosted()) {
-        x -=2;
+        x-=2;
       } else {
         x--;
       }
     } else if (dir.compare("down") == 0) {
       if (p1links.at(linkNum).isBoosted()) {
-        x +=2;
+        x+=2;
       } else {
         x++;
       }
     } else if (dir.compare("left") == 0) {
       if (p1links.at(linkNum).isBoosted()) {
-        y -=2;
+        y-=2;
       } else {
         y--;
       }
     } else if (dir.compare("right") == 0) {
       if (p1links.at(linkNum).isBoosted()) {
-        x +=2;
+        x+=2;
       } else {
         x++;
       }
@@ -138,25 +141,25 @@ void Board::moveLink(char link, string dir) {
     p2links.at(linkNum).setPrevCoords(x, y); // keeping track of coords before moving
     if (dir.compare("up") == 0) {
       if (p2links.at(linkNum).isBoosted()) {
-        x -=2;
+        x-=2;
       } else {
         x--;
       }
     } else if (dir.compare("down") == 0) {
       if (p2links.at(linkNum).isBoosted()) {
-        x +=2;
+        x+=2;
       } else {
         x++;
       }
     } else if (dir.compare("left") == 0) {
       if (p2links.at(linkNum).isBoosted()) {
-        y -=2;
+        y-=2;
       } else {
         y--;
       }
     } else if (dir.compare("right") == 0) {
       if (p2links.at(linkNum).isBoosted()) {
-        y +=2;
+        y+=2;
       } else {
         y++;
       }
@@ -429,10 +432,10 @@ void Board::scan(char link, int abilityID) {
   int linkNum;
   if (link >= 'a' && link <= 'h') {
     linkNum = link - 'a';
-    p1links.at(link-'a').setVisibility(true);
+    p1links.at(linkNum).setVisibility(true);
   } else if (link >= 'A' && link <= 'H') {
     linkNum = link - 'A';
-    p2links.at(link-'A').setVisibility(true);
+    p2links.at(linkNum).setVisibility(true);
   } else {
     cout << "invalid link to scan" << endl;
   }
@@ -461,8 +464,8 @@ void Board::printLink(int playerNum, int linkNum, int playerTurn) const {
 ostream &operator<<(ostream &out, const Board &b) { 
   // out << "entered board print function" << endl;
   out << "Player 1:" << endl; // printing out player 1 info
-  out << "Downloaded: " << b.getPlayer(2)->getDownloadedDataCount() << "D, " << b.getPlayer(2)->getDownloadedVirusCount() << "V" << endl; 
-  out << "Abilities: " << b.getPlayer(2)->getAbilityCount() << endl;
+  out << "Downloaded: " << b.getPlayer(1)->getDownloadedDataCount() << "D, " << b.getPlayer(1)->getDownloadedVirusCount() << "V" << endl; 
+  out << "Abilities: " << b.getPlayer(1)->getAbilityCount() << endl;
   if (b.getPlayerTurn() == 1) {
     for (int i = 0; i < 8; i++) { 
       out << char(i + 'a') << ": ";
