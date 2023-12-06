@@ -88,9 +88,9 @@ void Board::setData(int playerNum, int linkNum, bool isData) {
   }
 }
 
+// assigns the strength to each link
 void Board::setStrength(int playerNum, int linkNum, int strength) {
   if (playerNum == 1) {
-    //cout << "strength in board: " << strength << endl;
     p1links.at(linkNum).setStrength(strength);
   } else if (playerNum == 2) {
     p2links.at(linkNum).setStrength(strength);
@@ -100,7 +100,7 @@ void Board::setStrength(int playerNum, int linkNum, int strength) {
 }
 
 void Board::linkBoost(char link, int abilityID) { 
-  // Ensure linkNum is within bounds
+  // Ensures linkNum is within bounds
   int linkNum;
   if (playerTurn == 1) {
     if (link >= 'a' && link <= 'h') {
@@ -157,7 +157,7 @@ void Board::moveLink(char link, string dir) {
         x++;
       }
     }
-    // reached other side
+    // reached other side of the board
     if (x == boardSize - 1) {
       // opponents server port
       if (y == 3 || y == 4) {
@@ -232,7 +232,7 @@ void Board::moveLink(char link, string dir) {
         break;
       }
     }
-  } else {
+  } else { // player 2
     linkNum = link - 'A';
     x = p2links.at(linkNum).getXCoord();
     y = p2links.at(linkNum).getYCoord();
@@ -320,19 +320,6 @@ void Board::removeLink(int x, int y) {
     //board[x][y] = nullptr; 
   }
 }
-
-/* void Board::activateFirewall(int x, int y, int playerNumber) {
-  if (isWithinBounds(x,y)) {
-    firewall[x][y] = std::make_unique<Firewall>(x, y, playerNumber);
-  }
-} 
-
-bool Board::isFirewall(int x, int y) const {
-  if (isWithinBounds(x, y)) {
-    return firewalls[x][y];
-  }
-  return false;
-} */
 
 void Board::setPlayerTurn(int player) {
   playerTurn = player;
