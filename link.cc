@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Link::Link() : visible{false}, downloaded{false} {}
+Link::Link() : visible{false}, downloaded{false}, boosted{false} {}
 
 Link::~Link() {}
 
