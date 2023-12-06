@@ -104,13 +104,29 @@ void Board::moveLink(char link, string dir) {
     y = p1links.at(linkNum).getYCoord();
     p1links.at(linkNum).setPrevCoords(x, y); // keeping track of coords before moving
     if (dir.compare("up") == 0) {
-      x--;
+      if (p1links.at(linkNum).isBoosted()) {
+        x -=2;
+      } else {
+        x--;
+      }
     } else if (dir.compare("down") == 0) {
-      x++;
+      if (p1links.at(linkNum).isBoosted()) {
+        x +=2;
+      } else {
+        x++;
+      }
     } else if (dir.compare("left") == 0) {
-      y--;
+      if (p1links.at(linkNum).isBoosted()) {
+        y -=2;
+      } else {
+        y--;
+      }
     } else if (dir.compare("right") == 0) {
-      y++;
+      if (p1links.at(linkNum).isBoosted()) {
+        x +=2;
+      } else {
+        x++;
+      }
     }
     p1links.at(linkNum).setCoords(x, y); // updating coords after moving
     td->notify(p1links.at(linkNum), "moved");
@@ -121,13 +137,29 @@ void Board::moveLink(char link, string dir) {
     y = p2links.at(linkNum).getYCoord();
     p2links.at(linkNum).setPrevCoords(x, y); // keeping track of coords before moving
     if (dir.compare("up") == 0) {
-      x--;
+      if (p2links.at(linkNum).isBoosted()) {
+        x -=2;
+      } else {
+        x--;
+      }
     } else if (dir.compare("down") == 0) {
-      x++;
+      if (p2links.at(linkNum).isBoosted()) {
+        x +=2;
+      } else {
+        x++;
+      }
     } else if (dir.compare("left") == 0) {
-      y--;
+      if (p2links.at(linkNum).isBoosted()) {
+        y -=2;
+      } else {
+        y--;
+      }
     } else if (dir.compare("right") == 0) {
-      y++;
+      if (p2links.at(linkNum).isBoosted()) {
+        y +=2;
+      } else {
+        y++;
+      }
     }
     p2links.at(linkNum).setCoords(x, y); // updating coords after moving
     td->notify(p2links.at(linkNum), "moved");
