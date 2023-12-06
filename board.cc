@@ -155,14 +155,14 @@ void Board::moveLink(char link, string dir) {
       oppstrength = p2links.at(oppNum).getStrength();
       
       if (mystrength > oppstrength) { // p1 wins battle
-        // download link of p2
+        download(oppNum + 'A');
       } else if (mystrength < oppstrength) { // p2 wins battle
-
+        download(oppNum + 'a');
       } else { // tie
         if (initiatingPlayer == 1) { // p1 wins battle
-
+          download(oppNum + 'A');
         } else { // p2 wins battle
-
+          download(oppNum + 'a');
         }
       }
 
@@ -173,13 +173,14 @@ void Board::moveLink(char link, string dir) {
 
       if (mystrength > oppstrength) { // p2 wins battle
         // download link of p1
+        download(oppNum + 'a');
       } else if (mystrength < oppstrength) { // p1 wins battle
-
+        download(oppNum + 'A');
       } else { // tie
         if (initiatingPlayer == 2) { // p2 wins battle
-
+          download(oppNum + 'a');
         } else { // p1 wins battle
-
+          download(oppNum + 'A');
         }
       }
     }
