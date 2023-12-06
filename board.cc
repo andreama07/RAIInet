@@ -395,8 +395,7 @@ bool Board::isValidMove(char link, string dir) const {
     }
   }
 
-
-  else if (occupiedByOwn(x, y)) { // check if new position already has one of player's pieces
+  if (occupiedByOwn(x, y)) { // check if new position already has one of player's pieces
     cout << "occupiedByOwn" << endl;
     return false;
   }
