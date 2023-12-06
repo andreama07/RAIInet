@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 #include "link.h"
-#include "abilityvisitor.h"
 
 class Player {
     int playerNum;
