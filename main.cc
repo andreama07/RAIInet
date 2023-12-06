@@ -177,10 +177,46 @@ int main (int argc, char *argv[]) {
                     } else if (ab == 'P') {
                         cout << "enter polarize" << endl;
                         //implement polarize
-
+                        char link;
+                        cin >> link;
+                        b.polarize(link, ID);
+                        cout << b << endl;
                     } // can add more abilities here
                 } else { // player2 turn
                     ab = b.getPlayer(2)->getAbility(ID);
+                    if (ab == 'L') {
+                        cout << "enter link boost" << endl;
+                        // implement link boost
+                        char link;
+                        cin >> link;
+                        b.linkBoost(link, ID);
+                        cout << b << endl;
+                    } else if (ab == 'F') {
+                        cout << "enter firewall" << endl;
+                        //implement firewall
+
+                    } else if (ab == 'D') {
+                        cout << "enter download" << endl;
+                        //implement download
+                        char link;
+                        cin >> link;
+                        b.download(link, b.getPlayerTurn(), ID); // this returns a bool but we don't need to store it
+                        cout << b << endl;
+                    } else if (ab == 'S') {
+                        cout << "enter scan" << endl;
+                        //implement scan
+                        char link;
+                        cin >> link;
+                        b.scan(link, ID);
+                        cout << b << endl;
+                    } else if (ab == 'P') {
+                        cout << "enter polarize" << endl;
+                        //implement polarize
+                        char link;
+                        cin >> link;
+                        b.polarize(link, ID);
+                        cout << b << endl;
+                    } // can add more abilities here
                 }
                 
 
@@ -197,7 +233,116 @@ int main (int argc, char *argv[]) {
                 ifstream f{fName};
                 string s;
                 while (f >> s) {
-                    // same as non-file implementation (copy paste in)
+                    if (s == "move") {
+                        // cout << "move link" << endl;
+                        char link;
+                        string dir;
+                        cin >> link;
+                        cin >> dir;
+                        if (b.isValidLink(link)) {
+                            if (isValidDir(dir)) {
+                                if (b.isValidMove(link, dir)) {
+                                    b.moveLink(link, dir);
+                                } else {
+                                    cout << "not a valid move" << endl;
+                                    continue;
+                                }
+                            } else {
+                                cout << "not a valid direction" << endl;
+                                continue;
+                            }
+                        } else {
+                            cout << "not a valid link for you" << endl;
+                            continue;
+                        }
+                        if (b.getPlayerTurn() == 1) { // turn is over after a link is moved
+                            b.setPlayerTurn(2);
+                            cout << "Player 2 Turn!" << endl;
+                        } else {
+                            b.setPlayerTurn(1);
+                            cout << "Player 1 Turn!" << endl;
+                        }
+                    } else if (s == "abilities") {
+                        cout << "print out abilities" << endl;
+                        if (b.getPlayerTurn() == 1) {
+                        b.getPlayer(1)->printAbilities();
+                        } else { // player2 turn
+                        b.getPlayer(2)->printAbilities();
+                        }
+                    } else if (s == "ability") {
+                        cout << "use a specific ability" << endl;
+                        int ID;
+                        char ab;
+                        cin >> ID;
+                        if (b.getPlayerTurn() == 1) {
+                            ab = b.getPlayer(1)->getAbility(ID);
+                            if (ab == 'L') {
+                                cout << "enter link boost" << endl;
+                                // implement link boost
+                                char link;
+                                cin >> link;
+                                b.linkBoost(link, ID);
+                                cout << b << endl;
+                            } else if (ab == 'F') {
+                                cout << "enter firewall" << endl;
+                                //implement firewall
+
+                            } else if (ab == 'D') {
+                                cout << "enter download" << endl;
+                                //implement download
+                                char link;
+                                cin >> link;
+                                b.download(link, b.getPlayerTurn(), ID); // this returns a bool but we don't need to store it
+                                cout << b << endl;
+                            } else if (ab == 'S') {
+                                cout << "enter scan" << endl;
+                                //implement scan
+                                char link;
+                                cin >> link;
+                                b.scan(link, ID);
+                                cout << b << endl;
+                            } else if (ab == 'P') {
+                                cout << "enter polarize" << endl;
+                                //implement polarize
+
+                            } // can add more abilities here
+                        } else { // player2 turn
+                            ab = b.getPlayer(2)->getAbility(ID);
+                            if (ab == 'L') {
+                                cout << "enter link boost" << endl;
+                                // implement link boost
+                                char link;
+                                cin >> link;
+                                b.linkBoost(link, ID);
+                                cout << b << endl;
+                            } else if (ab == 'F') {
+                                cout << "enter firewall" << endl;
+                                //implement firewall
+
+                            } else if (ab == 'D') {
+                                cout << "enter download" << endl;
+                                //implement download
+                                char link;
+                                cin >> link;
+                                b.download(link, b.getPlayerTurn(), ID); // this returns a bool but we don't need to store it
+                                cout << b << endl;
+                            } else if (ab == 'S') {
+                                cout << "enter scan" << endl;
+                                //implement scan
+                                char link;
+                                cin >> link;
+                                b.scan(link, ID);
+                                cout << b << endl;
+                            } else if (ab == 'P') {
+                                cout << "enter polarize" << endl;
+                                //implement polarize
+                                char link;
+                                cin >> link;
+                                b.polarize(link, ID);
+                                cout << b << endl;
+                            } // can add more abilities here
+                        }
+                    }
                 }
             } 
         }

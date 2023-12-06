@@ -56,6 +56,7 @@ public:
     void download(char link, int player, int abilityID = 0);
     void scan(char link, int abilityID);
     void linkBoost(char linkNum, int abilityID);
+    void polarize(char link, int abilityID);
 
     // Other methods related to board management
     void printLink(int playerNum, int linkNum, int playerTurn) const;

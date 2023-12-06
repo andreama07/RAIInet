@@ -14,7 +14,7 @@ class TextDisplay: public Observer {
 public:
   TextDisplay();
 
-  void notify(Link &l, std::string action) override;
+  void notify(Link &l, std::string action, char winner = ' ') override;
 
   ~TextDisplay();
 

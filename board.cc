@@ -1,6 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <chrono>
+#include <stdexcept>
+#include <random>
+#include <algorithm>
 #include "board.h"
 
 using namespace std;
@@ -101,9 +105,9 @@ void Board::setData(int playerNum, int linkNum, bool isData) {
   }
 }
 
+// assigns the strength to each link
 void Board::setStrength(int playerNum, int linkNum, int strength) {
   if (playerNum == 1) {
-    //cout << "strength in board: " << strength << endl;
     p1links.at(linkNum).setStrength(strength);
   } else if (playerNum == 2) {
     p2links.at(linkNum).setStrength(strength);
@@ -113,7 +117,7 @@ void Board::setStrength(int playerNum, int linkNum, int strength) {
 }
 
 void Board::linkBoost(char link, int abilityID) { 
-  // Ensure linkNum is within bounds
+  // Ensures linkNum is within bounds
   int linkNum;
   if (playerTurn == 1) {
     if (link >= 'a' && link <= 'h') {
@@ -170,7 +174,7 @@ void Board::moveLink(char link, string dir) {
         x++;
       }
     }
-    // reached other side
+    // reached other side of the board
     if (x == boardSize - 1) {
       // opponents server port
       if (y == 3 || y == 4) {
@@ -247,7 +251,7 @@ void Board::moveLink(char link, string dir) {
         break;
       }
     }
-  } else {
+  } else { // player 2
     linkNum = link - 'A';
     x = p2links.at(linkNum).getXCoord();
     y = p2links.at(linkNum).getYCoord();
@@ -265,14 +269,15 @@ void Board::moveLink(char link, string dir) {
   //battle
   int mystrength;
   int oppstrength;
+  char winningChar;
   if (oppOccupied) {
     // need to reveal links
     if (playerTurn == 1) {
       linkNum = link - 'a';
       mystrength = p1links.at(linkNum).getStrength();
       oppstrength = p2links.at(oppNum).getStrength();
-      
       if (mystrength > oppstrength) { // p1 wins battle
+<<<<<<< HEAD
         download(oppNum + 'A', 1);
         td->notify(p1links.at(linkNum), "won");
         gd->notify(p1links.at(linkNum), "won");
@@ -289,6 +294,28 @@ void Board::moveLink(char link, string dir) {
           download(linkNum + 'a', 2);
           td->notify(p2links.at(oppNum), "won");
           gd->notify(p2links.at(oppNum), "won");
+=======
+        // cout << "mystrength > oppstrength" << endl;
+        winningChar = linkNum + 'a';
+        download(oppNum + 'A', 1);
+        td->notify(p1links.at(linkNum), "won", winningChar);
+      } else if (mystrength < oppstrength) { // p2 wins battle
+        // cout << "mystrength < oppstrength" << endl;
+        winningChar = oppNum + 'A';
+        download(linkNum + 'a', 2);
+        td->notify(p2links.at(oppNum), "won", winningChar);
+      } else { // tie
+        if (initiatingPlayer == 1) { // p1 wins battle
+          // cout << "tie but i moved" << endl;
+          winningChar = linkNum + 'a';
+          download(oppNum + 'A', 1);
+          td->notify(p1links.at(linkNum), "won", winningChar);
+        } else { // p2 wins battle
+          // cout << "tie but they moved" << endl;
+          winningChar = oppNum + 'A';
+          download(linkNum + 'a', 2);
+          td->notify(p2links.at(oppNum), "won", winningChar);
+>>>>>>> c202e418e04561cadcdf13048ee015557b3b69b8
         }
       }
 
@@ -299,6 +326,7 @@ void Board::moveLink(char link, string dir) {
 
       if (mystrength > oppstrength) { // p2 wins battle
         // download link of p1
+<<<<<<< HEAD
         download(oppNum + 'a', 2);
         td->notify(p2links.at(linkNum), "won");
         gd->notify(p2links.at(linkNum), "won");
@@ -315,6 +343,28 @@ void Board::moveLink(char link, string dir) {
           download(linkNum + 'A', 1);
           td->notify(p2links.at(oppNum), "won");
           gd->notify(p2links.at(oppNum), "won");
+=======
+        // cout << "mystrength > oppstrength" << endl;
+        winningChar = linkNum + 'A';
+        download(oppNum + 'a', 2);
+        td->notify(p2links.at(linkNum), "won", winningChar);
+      } else if (mystrength < oppstrength) { // p1 wins battle
+        // cout << "mystrength < oppstrength" << endl;
+        winningChar = oppNum + 'a';
+        download(linkNum + 'A', 1);
+        td->notify(p1links.at(oppNum), "won", winningChar);
+      } else { // tie
+        if (initiatingPlayer == 2) { // p2 wins battle
+          // cout << "tie but i moved" << endl;
+          winningChar = linkNum + 'A';
+          download(oppNum + 'a', 2);
+          td->notify(p2links.at(linkNum), "won", winningChar);
+        } else { // p1 wins battle
+          // cout << "tie but they moved" << endl;
+          winningChar = oppNum + 'a';
+          download(linkNum + 'A', 1);
+          td->notify(p1links.at(oppNum), "won", winningChar);
+>>>>>>> c202e418e04561cadcdf13048ee015557b3b69b8
         }
       }
     }
@@ -335,19 +385,6 @@ void Board::removeLink(int x, int y) {
     //board[x][y] = nullptr; 
   }
 }
-
-/* void Board::activateFirewall(int x, int y, int playerNumber) {
-  if (isWithinBounds(x,y)) {
-    firewall[x][y] = std::make_unique<Firewall>(x, y, playerNumber);
-  }
-} 
-
-bool Board::isFirewall(int x, int y) const {
-  if (isWithinBounds(x, y)) {
-    return firewalls[x][y];
-  }
-  return false;
-} */
 
 void Board::setPlayerTurn(int player) {
   playerTurn = player;
@@ -556,6 +593,29 @@ void Board::scan(char link, int abilityID) {
     p2->setUsed(abilityID); // set the download ability to used
   }
   // td->notify(); 
+}
+
+void Board::polarize(char link, int abilityID) {
+  int linkNum;
+  if (link >= 'a' && link <= 'h') {
+    linkNum = link - 'a';
+    bool cur = p1links.at(linkNum).getData();
+    p1links.at(linkNum).setData(!cur);
+  } else if (link >= 'A' && link <= 'H') {
+    linkNum = link - 'A';
+    bool cur = p2links.at(linkNum).getData();
+    p2links.at(linkNum).setData(!cur);
+  } else {
+    cout << "invalid link to polarize" << endl;
+  }
+
+  if (playerTurn == 1) {
+    p1->decrementAbilityCount(); // used up one ability
+    p1->setUsed(abilityID); // set the download ability to used
+  } else {
+    p2->decrementAbilityCount(); // used up one ability
+    p2->setUsed(abilityID); // set the download ability to used
+  }
 }
 
 void Board::printLink(int playerNum, int linkNum, int playerTurn) const {
