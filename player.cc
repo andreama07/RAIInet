@@ -2,6 +2,12 @@
 #include <string>
 #include <iostream>
 
+#include <stdexcept>
+#include <vector>
+#include <algorithm>
+#include <random>
+#include <chrono>
+
 #include "player.h"
 
 using namespace std;
@@ -16,6 +22,7 @@ Player::Player(int playerNum) : playerNum(playerNum), downloadedDataCount(0), do
     for (int i = 0; i < 5; i++) {
         abilityUsed.emplace_back(false); // abilities start unused
     }
+
 }
 
 Player::~Player() {}
