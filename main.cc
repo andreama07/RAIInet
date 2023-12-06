@@ -162,7 +162,7 @@ int main (int argc, char *argv[]) {
                         //implement download
                         char link;
                         cin >> link;
-                        b.download(link, ID); // this returns a bool but we don't need to store it
+                        b.download(link, b.getPlayerTurn(), ID); // this returns a bool but we don't need to store it
                         cout << b << endl;
                     } else if (ab == 'S') {
                         cout << "enter scan" << endl;

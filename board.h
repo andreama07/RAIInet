@@ -49,7 +49,7 @@ public:
     bool isValidLink(char c) const;
 
     // Ability functions
-    bool download(char link, int abilityID = 0);
+    void download(char link, int player, int abilityID = 0);
     void scan(char link, int abilityID);
     void linkBoost(char linkNum, int abilityID);
 
