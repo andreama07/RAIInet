@@ -323,14 +323,17 @@ bool Board::download(char link, int abilityID) {
       linkNum = link - 'A';
       if (!p2links.at(linkNum).getDownloaded()) { // if not already downloaded
         p2links.at(linkNum).setDownloaded(true); // download
+        p2links.at(linkNum).setCoords(-1, -1);
         td->notify(p2links.at(linkNum), "downloaded"); // notify text display
         if (p2links.at(linkNum).getData()) { // if the downloaded link is a data
           p1->incrementDownloadedData();
         } else { // if the downloaded link is a virus
           p1->incrementDownloadedVirus();
         }
-        p1->decrementAbilityCount(); // used up one ability
-        p1->setUsed(abilityID); // set the download ability to used
+        if (abilityID != 0) {
+          p1->decrementAbilityCount(); // used up one ability
+          p1->setUsed(abilityID); // set the download ability to used
+        }
         return true;
       } else {
         cout << "link is already downloaded" << endl;
@@ -346,14 +349,17 @@ bool Board::download(char link, int abilityID) {
       linkNum = link - 'a';
       if (!p1links.at(linkNum).getDownloaded()) { // if not already downloaded
         p1links.at(linkNum).setDownloaded(true); // download
+        p1links.at(linkNum).setCoords(-1, -1);
         td->notify(p1links.at(linkNum), "downloaded"); // notify text display
         if (p1links.at(linkNum).getData()) { // if the downloaded link is a data
           p2->incrementDownloadedData();
         } else { // if the downloaded link is a virus
           p2->incrementDownloadedVirus();
         }
-        p2->decrementAbilityCount(); // used up one ability
-        p2->setUsed(abilityID); // set the download ability to used
+        if (abilityID != 0) {
+          p2->decrementAbilityCount(); // used up one ability
+          p2->setUsed(abilityID); // set the download ability to used
+        }
         return true;
       } else {
         cout << "link is already downloaded" << endl;

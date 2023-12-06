@@ -49,7 +49,7 @@ public:
     bool isValidLink(char c) const;
 
     // Ability functions
-    bool download(char link, int abilityID);
+    bool download(char link, int abilityID = 0);
 
     // Other methods related to board management
     void printLink(int playerNum, int linkNum, int playerTurn) const;
