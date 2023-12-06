@@ -205,19 +205,10 @@ int main (int argc, char *argv[]) {
                     } else if (ab == 'S') {
                         cout << "enter scan" << endl;
                         //implement scan
-                        /* char link;
+                        char link;
                         cin >> link;
-                        if (link >= 'a' && link <= 'h') {
-                            p1links.at(link-'a').setVisibility(true);
-                        } else if (link >= 'A' && link <= 'H') {
-                            p2links.at(link-'A').setVisibility(true);
-                        } else {
-                            cout << "invalid link to scan" << endl;
-                            continue
-                        }
-                        // need to update player fields
-                        //update td
-                        g.td->notify(); */
+                        b.scan(link, ID);
+                        cout << b << endl;
                     } else if (ab == 'P') {
                         cout << "enter polarize" << endl;
                         //implement polarize

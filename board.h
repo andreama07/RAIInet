@@ -51,6 +51,7 @@ public:
 
     // Ability functions
     bool download(char link, int abilityID = 0);
+    void scan(char link, int abilityID);
 
     // Other methods related to board management
     void printLink(int playerNum, int linkNum, int playerTurn) const;

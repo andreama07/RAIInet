@@ -425,6 +425,28 @@ bool Board::download(char link, int abilityID) {
   }
 }
 
+void Board::scan(char link, int abilityID) {
+  int linkNum;
+  if (link >= 'a' && link <= 'h') {
+    linkNum = link - 'a';
+    p1links.at(link-'a').setVisibility(true);
+  } else if (link >= 'A' && link <= 'H') {
+    linkNum = link - 'A';
+    p2links.at(link-'A').setVisibility(true);
+  } else {
+    cout << "invalid link to scan" << endl;
+  }
+  // need to update player fields
+  //update td
+  if (playerTurn == 1) {
+    p1->decrementAbilityCount(); // used up one ability
+    p1->setUsed(abilityID); // set the download ability to used
+  } else {
+    p2->decrementAbilityCount(); // used up one ability
+    p2->setUsed(abilityID); // set the download ability to used
+  }
+  // td->notify(); 
+}
 
 void Board::printLink(int playerNum, int linkNum, int playerTurn) const {
   if (playerNum == 1) {
