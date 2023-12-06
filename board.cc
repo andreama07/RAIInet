@@ -89,7 +89,7 @@ void Board::useLinkBoost(int playerNum, int linkNum) { // LA added
 
     // Check if the ability is "Linkboost" for the specified link
     if ((*playerLinks)[linkNum].getAbility() == "Linkboost") {
-      (*playerLinks)[linkNum].isBoosted();
+      (*playerLinks)[linkNum].setBoosted();
 
   }
 }
