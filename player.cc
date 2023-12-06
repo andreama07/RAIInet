@@ -2,12 +2,6 @@
 #include <string>
 #include <iostream>
 
-#include <stdexcept>
-#include <vector>
-#include <algorithm>
-#include <random>
-#include <chrono>
-
 #include "player.h"
 
 using namespace std;
