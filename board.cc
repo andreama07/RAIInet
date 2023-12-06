@@ -83,7 +83,7 @@ void Board::useLinkBoost(int playerNum, int linkNum) { // LA added
     }
 
     // Ensure linkNum is within bounds
-    if (linkNum < 0 || linkNum >= playerLinks->size()) {
+    if (linkNum < 0 || linkNum >= 5) {
       return;
     }
 

@@ -120,17 +120,15 @@ void Link::moveLink(std::string dir) {
     }
 }
 
-// void Link::boostRange() { // LA Added 
-//     if (!boosted) {
-//         range = 2;
-//         boosted = true;
-//     }
-// }
-
 bool Link::isBoosted() const { // LA Added 
-    return boosted = true;
+    return boosted;
 }
 
+void Link::setBoosted() { // sets boosted to true after using it 
+    if (!boosted) {
+        boosted = true;
+    }
+}
 
 void Link::print(int playerTurn) const {
     if (playerTurn == 1) {

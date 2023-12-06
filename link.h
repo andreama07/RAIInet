@@ -13,6 +13,7 @@ class Link {
     int prevX;
     int prevY;
     bool downloaded;
+    bool boosted;
 
 public: 
 
@@ -46,6 +47,9 @@ public:
     // printing link info
     void print(int playerTurn) const;
     // want to have all the ability methods here
+
+    bool isBoosted() const; 
+    void setBoosted(); 
 
 };
 
