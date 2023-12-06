@@ -106,6 +106,7 @@ void Board::moveLink(char link, string dir) {
     x = p1links.at(linkNum).getXCoord();
     y = p1links.at(linkNum).getYCoord();
     p1links.at(linkNum).setPrevCoords(x, y); // keeping track of coords before moving
+
     if (dir.compare("up") == 0) {
       if (p1links.at(linkNum).isBoosted()) {
         x-=2;
@@ -129,6 +130,17 @@ void Board::moveLink(char link, string dir) {
         x+=2;
       } else {
         x++;
+      }
+    }
+    // reached other side
+    if (x == boardSize - 1) {
+      // opponents server port
+      if (y == 3 || y == 4) {
+        // download link onto player 2
+        download(linkNum + 'a', 2);
+      } else {
+        // download link to self
+        download(linkNum + 'a', 1);
       }
     }
     p1links.at(linkNum).setCoords(x, y); // updating coords after moving
@@ -162,6 +174,17 @@ void Board::moveLink(char link, string dir) {
         y+=2;
       } else {
         y++;
+      }
+    }
+    // reached other side
+    if (x == 0) {
+      // oponents server port
+      if (y == 3 || y == 4) {
+        // download link onto player 1
+        download(linkNum + 'A', 1);
+      } else {
+        // download link to self
+        download(linkNum + 'A', 2);
       }
     }
     p2links.at(linkNum).setCoords(x, y); // updating coords after moving
@@ -350,9 +373,21 @@ bool Board::isValidMove(char link, string dir) const {
     y++;
     cout << "moving right " << x << ", " << y << endl;
   }
-  if (y < 0 || y >= boardSize || x < 0 || x >= boardSize) { // check if new position is within the board
-    cout << "coords outside of board" << endl;
-    return false;
+
+// check if new position is within the board  
+  if (playerTurn == 1) {
+    if (x < 0 || x > boardSize || y < 0 || y >= boardSize) {
+      cout << "coords outside of board" << endl;
+      return false;
+    }
+  } else { // player 2
+    if (x < -1 || x >= boardSize || y < 0 || y >= boardSize) {
+      cout << "coords outside of board" << endl;
+      return false;
+    }
+  }
+
+
   } else if (occupiedByOwn(x, y)) { // check if new position already has one of player's pieces
     cout << "occupiedByOwn" << endl;
     return false;
