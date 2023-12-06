@@ -9,7 +9,7 @@ class Link;
 
 class Observer {
  public:
-  virtual void notify(Link &l, std::string action) = 0;  // l is the Link that called the notify method
+  virtual void notify(Link &l, std::string action, char winner = ' ') = 0;  // l is the Link that called the notify method
   virtual ~Observer() = default;
 };
 #endif

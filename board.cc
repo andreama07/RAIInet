@@ -1,6 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <chrono>
+#include <stdexcept>
+#include <random>
+#include <algorithm>
 #include "board.h"
 
 using namespace std;
@@ -250,30 +254,34 @@ void Board::moveLink(char link, string dir) {
   //battle
   int mystrength;
   int oppstrength;
+  char winningChar;
   if (oppOccupied) {
     // need to reveal links
     if (playerTurn == 1) {
       linkNum = link - 'a';
       mystrength = p1links.at(linkNum).getStrength();
       oppstrength = p2links.at(oppNum).getStrength();
-      
       if (mystrength > oppstrength) { // p1 wins battle
-        cout << "mystrength > oppstrength" << endl;
+        // cout << "mystrength > oppstrength" << endl;
+        winningChar = linkNum + 'a';
         download(oppNum + 'A', 1);
-        td->notify(p1links.at(linkNum), "won");
+        td->notify(p1links.at(linkNum), "won", winningChar);
       } else if (mystrength < oppstrength) { // p2 wins battle
-        cout << "mystrength < oppstrength" << endl;
+        // cout << "mystrength < oppstrength" << endl;
+        winningChar = oppNum + 'A';
         download(linkNum + 'a', 2);
-        td->notify(p2links.at(oppNum), "won");
+        td->notify(p2links.at(oppNum), "won", winningChar);
       } else { // tie
         if (initiatingPlayer == 1) { // p1 wins battle
-          cout << "tie but i moved" << endl;
+          // cout << "tie but i moved" << endl;
+          winningChar = linkNum + 'a';
           download(oppNum + 'A', 1);
-          td->notify(p1links.at(linkNum), "won");
+          td->notify(p1links.at(linkNum), "won", winningChar);
         } else { // p2 wins battle
-          cout << "tie but they moved" << endl;
+          // cout << "tie but they moved" << endl;
+          winningChar = oppNum + 'A';
           download(linkNum + 'a', 2);
-          td->notify(p2links.at(oppNum), "won");
+          td->notify(p2links.at(oppNum), "won", winningChar);
         }
       }
 
@@ -284,22 +292,26 @@ void Board::moveLink(char link, string dir) {
 
       if (mystrength > oppstrength) { // p2 wins battle
         // download link of p1
-        cout << "mystrength > oppstrength" << endl;
+        // cout << "mystrength > oppstrength" << endl;
+        winningChar = linkNum + 'A';
         download(oppNum + 'a', 2);
-        td->notify(p2links.at(linkNum), "won");
+        td->notify(p2links.at(linkNum), "won", winningChar);
       } else if (mystrength < oppstrength) { // p1 wins battle
-        cout << "mystrength < oppstrength" << endl;
+        // cout << "mystrength < oppstrength" << endl;
+        winningChar = oppNum + 'a';
         download(linkNum + 'A', 1);
-        td->notify(p2links.at(oppNum), "won");
+        td->notify(p1links.at(oppNum), "won", winningChar);
       } else { // tie
         if (initiatingPlayer == 2) { // p2 wins battle
-          cout << "tie but i moved" << endl;
+          // cout << "tie but i moved" << endl;
+          winningChar = linkNum + 'A';
           download(oppNum + 'a', 2);
-          td->notify(p2links.at(linkNum), "won");
+          td->notify(p2links.at(linkNum), "won", winningChar);
         } else { // p1 wins battle
-          cout << "tie but they moved" << endl;
+          // cout << "tie but they moved" << endl;
+          winningChar = oppNum + 'a';
           download(linkNum + 'A', 1);
-          td->notify(p2links.at(oppNum), "won");
+          td->notify(p1links.at(oppNum), "won", winningChar);
         }
       }
     }
@@ -552,6 +564,29 @@ void Board::scan(char link, int abilityID) {
     p2->setUsed(abilityID); // set the download ability to used
   }
   // td->notify(); 
+}
+
+void Board::polarize(char link, int abilityID) {
+  int linkNum;
+  if (link >= 'a' && link <= 'h') {
+    linkNum = link - 'a';
+    bool cur = p1links.at(linkNum).getData();
+    p1links.at(linkNum).setData(!cur);
+  } else if (link >= 'A' && link <= 'H') {
+    linkNum = link - 'A';
+    bool cur = p2links.at(linkNum).getData();
+    p2links.at(linkNum).setData(!cur);
+  } else {
+    cout << "invalid link to polarize" << endl;
+  }
+
+  if (playerTurn == 1) {
+    p1->decrementAbilityCount(); // used up one ability
+    p1->setUsed(abilityID); // set the download ability to used
+  } else {
+    p2->decrementAbilityCount(); // used up one ability
+    p2->setUsed(abilityID); // set the download ability to used
+  }
 }
 
 void Board::printLink(int playerNum, int linkNum, int playerTurn) const {
