@@ -8,12 +8,11 @@ using namespace std;
 Board::Board() : boardSize{8}, td{nullptr} {}// sets default parameters of the board 
 
 
-bool Board::isWithinBounds(int x, int y) const { // this function is done 
-  // need a size filed
+bool Board::isWithinBounds(int x, int y) const {  // check that we are in the board
   return ((x <= boardSize - 1 && x >= 0) && (y <= boardSize - 1 && y >= 0));
 }
 
-Board::~Board() { // nothing might actually need to be done here as nothing uses "new"
+Board::~Board() { // nothing uses "new"
   p1links.clear();
   p2links.clear();
   boardSize = 0;
@@ -24,6 +23,20 @@ Board::~Board() { // nothing might actually need to be done here as nothing uses
 
 void Board::init() { // initializes board with empty links and attaches textDisplay
 
+    // default random links
+    std::vector<string> links1 = { "v1", "v2", "v3", "v4", "d1", "d2", "d3", "d4"};
+    std::vector<string> links2 = { "v1", "v2", "v3", "v4", "d1", "d2", "d3", "d4"};
+    
+    // make a default seed value that takes the systems current time
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    // make a random number using the default seed
+    std::default_random_engine rng{seed};
+    // shuffle 1000 times
+    for ( int i = 0; i < 1000; i++ ) {
+		  std::shuffle( links1.begin(), links1.end(), rng );
+      std::shuffle( links2.begin(), links2.end(), rng );			
+	  }
+
   for (int i = 0; i < boardSize; i++) { // sets player 1's 8 links
     Link link;
     link.setOwner(1);
@@ -32,6 +45,12 @@ void Board::init() { // initializes board with empty links and attaches textDisp
     } else {
       link.setCoords(0, i);
     }
+    if (links1.at(i)[0] =='v') {
+      link.setData(false);
+    } else {
+      link.setData(true);
+    }
+    link.setStrength(links1.at(i)[1] - '0');
     p1links.emplace_back(link);
   }
   for (int i = 0; i < boardSize; i++) { // sets player 2's 8 links
@@ -42,6 +61,12 @@ void Board::init() { // initializes board with empty links and attaches textDisp
     } else {
       link.setCoords(7, i);
     }
+    if (links2.at(i)[0] =='v') {
+      link.setData(false);
+    } else {
+      link.setData(true);
+    }
+    link.setStrength(links2.at(i)[1] - '0');
     p2links.emplace_back(link);
   }
   // add observers
