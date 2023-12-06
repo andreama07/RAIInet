@@ -258,16 +258,20 @@ void Board::moveLink(char link, string dir) {
       oppstrength = p2links.at(oppNum).getStrength();
       
       if (mystrength > oppstrength) { // p1 wins battle
+        cout << "mystrength > oppstrength" << endl;
         download(oppNum + 'A', 1);
         td->notify(p1links.at(linkNum), "won");
       } else if (mystrength < oppstrength) { // p2 wins battle
+        cout << "mystrength < oppstrength" << endl;
         download(linkNum + 'a', 2);
         td->notify(p2links.at(oppNum), "won");
       } else { // tie
         if (initiatingPlayer == 1) { // p1 wins battle
+          cout << "tie but i moved" << endl;
           download(oppNum + 'A', 1);
           td->notify(p1links.at(linkNum), "won");
         } else { // p2 wins battle
+          cout << "tie but they moved" << endl;
           download(linkNum + 'a', 2);
           td->notify(p2links.at(oppNum), "won");
         }
@@ -280,16 +284,20 @@ void Board::moveLink(char link, string dir) {
 
       if (mystrength > oppstrength) { // p2 wins battle
         // download link of p1
+        cout << "mystrength > oppstrength" << endl;
         download(oppNum + 'a', 2);
         td->notify(p2links.at(linkNum), "won");
       } else if (mystrength < oppstrength) { // p1 wins battle
+        cout << "mystrength < oppstrength" << endl;
         download(linkNum + 'A', 1);
         td->notify(p2links.at(oppNum), "won");
       } else { // tie
         if (initiatingPlayer == 2) { // p2 wins battle
+          cout << "tie but i moved" << endl;
           download(oppNum + 'a', 2);
           td->notify(p2links.at(linkNum), "won");
         } else { // p1 wins battle
+          cout << "tie but they moved" << endl;
           download(linkNum + 'A', 1);
           td->notify(p2links.at(oppNum), "won");
         }
@@ -440,73 +448,98 @@ bool Board::isValidLink(char c) const {
 void Board::download(char link, int player, int abilityID) {
   cout << "entered board download" << endl;
   int linkNum;
-  if (playerTurn == 1) {
-    if (link >= 'A'  && link <='H') { // valid opponent link (need to check if already downloaded)
-      // download and update player fields + td
+
+  if (abilityID == 0) { // used as a helper function, not an ability
+    if (link >= 'A' && link <='H') {
       linkNum = link - 'A';
       if (!p2links.at(linkNum).getDownloaded()) { // if not already downloaded
-        cout << "not already downloaded" << endl;
         p2links.at(linkNum).setDownloaded(true); // download
-        cout << "before setting coords" << endl;
-        p2links.at(linkNum).setCoords(-1, -1); // set coords off board
-        cout << "after setting coords" << endl;
         td->notify(p2links.at(linkNum), "downloaded"); // notify text display (will change to a dot)
-        cout << "after notify" << endl;
+        p2links.at(linkNum).setCoords(-1, -1); // set coords off board
         if (p2links.at(linkNum).getData()) { // if the downloaded link is a data
-          cout << "gonna download data" << endl;
           if (player == 1) { // p1 downloads the data
-            p1->incrementDownloadedData();
-          } else {  // p2 downloads the data
+            p1->incrementDownloadedData(); 
+          } else { // p2 downloads the data
             p2->incrementDownloadedData();
           }
         } else { // if the downloaded link is a virus
-          cout << "gonna download virus" << endl;
           if (player == 1) { // p1 downloads the data
-            p1->incrementDownloadedVirus();
+            p1->incrementDownloadedVirus(); 
           } else { // p2 downloads the data
             p2->incrementDownloadedVirus();
           }
         }
-        if (abilityID != 0) { // p1 is using a download ability
-          p1->decrementAbilityCount(); // used up one ability
-          p1->setUsed(abilityID - 1); // set the download ability to used
-        } 
       } else {
         cout << "link is already downloaded" << endl;
       }
-    } else {
-      cout << "invalid opponent link to download" << endl;
-    }
-  } else { // player2 turn
-    if (link >= 'a'  && link <='h') { // valid opponent link (need to check if already downloaded)
-      // download and update player fields + td
+    } else if (link >= 'a'  && link <='h') {
       linkNum = link - 'a';
       if (!p1links.at(linkNum).getDownloaded()) { // if not already downloaded
         p1links.at(linkNum).setDownloaded(true); // download
-        p1links.at(linkNum).setCoords(-1, -1); // set coords off board
         td->notify(p1links.at(linkNum), "downloaded"); // notify text display (will change to a dot)
+        p1links.at(linkNum).setCoords(-1, -1); // set coords off board
         if (p1links.at(linkNum).getData()) { // if the downloaded link is a data
           if (player == 1) { // p1 downloads the data
-            p1->incrementDownloadedData();
-          } else {  // p2 downloads the data
+            p1->incrementDownloadedData(); 
+          } else { // p2 downloads the data
             p2->incrementDownloadedData();
           }
         } else { // if the downloaded link is a virus
-          if (player == 1) { // p1 downloads the virus
-            p1->incrementDownloadedVirus();
-          } else { // p2 downloads the virus
+          if (player == 1) { // p1 downloads the data
+            p1->incrementDownloadedVirus(); 
+          } else { // p2 downloads the data
             p2->incrementDownloadedVirus();
           }
-        }
-        if (abilityID != 0) { // p2 is using a download abiliity
-          p2->decrementAbilityCount(); // used up one ability
-          p2->setUsed(abilityID - 1); // set the download ability to used
         }
       } else {
         cout << "link is already downloaded" << endl;
       }
     } else {
-      cout << "invalid opponent link to download" << endl;
+      cout << "invalid link" << endl;
+    }
+  } else { // abilityID != 0 (one of the players is using an ability)
+    if (playerTurn == 1) {
+      if ((link >= 'A' && link <='H')) { // valid opponent link (need to check if already downloaded)
+        // download and update player fields + td
+        linkNum = link - 'A';
+        if (!p2links.at(linkNum).getDownloaded()) { // if not already downloaded
+          p2links.at(linkNum).setDownloaded(true); // download
+          td->notify(p2links.at(linkNum), "downloaded"); // notify text display (will change to a dot)
+          p2links.at(linkNum).setCoords(-1, -1); // set coords off board
+          if (p2links.at(linkNum).getData()) { // if the downloaded link is a data
+            p1->incrementDownloadedData();
+          } else { // if the downloaded link is a virus
+            p1->incrementDownloadedVirus();
+          }
+          p1->decrementAbilityCount(); // used up one ability
+          p1->setUsed(abilityID); // set the download ability to used
+        } else {
+          cout << "link is already downloaded" << endl;
+        }
+      } else {
+        cout << "invalid opponent link to download" << endl;
+      }
+    } else { // player2 turn
+      if (link >= 'a'  && link <='h') { // valid opponent link (need to check if already downloaded)
+        // download and update player fields + td
+        linkNum = link - 'a';
+        if (!p1links.at(linkNum).getDownloaded()) { // if not already downloaded
+          p1links.at(linkNum).setDownloaded(true); // download
+          td->notify(p1links.at(linkNum), "downloaded"); // notify text display (will change to a dot)
+          p1links.at(linkNum).setCoords(-1, -1); // set coords off board
+          if (p1links.at(linkNum).getData()) { // if the downloaded link is a data
+            p2->incrementDownloadedData();
+          } else { // if the downloaded link is a virus
+            p2->incrementDownloadedVirus();
+          }
+          p2->decrementAbilityCount(); // used up one ability
+          p2->setUsed(abilityID); // set the download ability to used
+        } else {
+          cout << "link is already downloaded" << endl;
+        }
+      } else {
+        cout << "invalid opponent link to download" << endl;
+      }
     }
   }
 }
