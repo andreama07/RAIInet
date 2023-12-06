@@ -74,6 +74,26 @@ void Board::setStrength(int playerNum, int linkNum, int strength) {
   }
 }
 
+void Board::useLinkBoost(int playerNum, int linkNum) { // LA added
+    std::vector<Link>* playerLinks;
+    if (playerNum == 1) {
+      playerLinks = &p1links;
+    } else {
+      playerLinks = &p2links;
+    }
+
+    // Ensure linkNum is within bounds
+    if (linkNum < 0 || linkNum >= playerLinks->size()) {
+      return;
+    }
+
+    // Check if the ability is "Linkboost" for the specified link
+    if ((*playerLinks)[linkNum].getAbility() == "Linkboost") {
+      (*playerLinks)[linkNum].isBoosted();
+
+  }
+}
+
 
 void Board::moveLink(char link, string dir) {
   int linkNum, x, y, initiatingPlayer;

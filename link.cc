@@ -120,6 +120,18 @@ void Link::moveLink(std::string dir) {
     }
 }
 
+// void Link::boostRange() { // LA Added 
+//     if (!boosted) {
+//         range = 2;
+//         boosted = true;
+//     }
+// }
+
+bool Link::isBoosted() const { // LA Added 
+    return boosted = true;
+}
+
+
 void Link::print(int playerTurn) const {
     if (playerTurn == 1) {
         if (player1owns || (!player1owns && visible)) {
