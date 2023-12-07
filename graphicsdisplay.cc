@@ -34,20 +34,41 @@ GraphicsDisplay::GraphicsDisplay() : boardSize(8) {
 }
 
 void GraphicsDisplay::notify(Link & l, string action, char winner) {
-    // int row = l.getRow();
-    // int col = l.getCol();
-    // bool state = c.getState();
-    // theGraphic[row][col] = state;
-    
-    // Calculate position and size of the cell in the window
-    /* int x = col * cellSize;
-    int y = row * cellSize;
+    // cout << "entered notify function in td" << endl;
+  // implement the textdisplay
+  if (action.compare("moved") == 0) { // if link just moved, update on td
+    // set old coordinates to an empty char
+    int prevX = l.getPrevX();
+    int prevY = l.getPrevY();
+    theGraphic.fillRectangle(prevX*linkSize, prevY*linkSize, linkSize, linkSize, 0);
 
-    // Choose color based on the state of the cell (True = Black, False = White)
-    int color = state ? Xwindow::Black : Xwindow::White;
-
-    // Fill only the cell that changed 
-    xw.fillRectangle(x, y, cellSize, cellSize, color); */
+    // move link to new spot on td
+    int curX = l.getXCoord();
+    int curY = l.getYCoord();
+    // cout << "new coords: " << curX << ", " << curY << endl; 
+    if (l.getVisibility()) { // if visible
+      if (l.getData()) { // if is data
+        theGraphic.fillRectangle(curX*linkSize, curY*linkSize, linkSize, linkSize, 3);
+      } else { // if is virus
+        theGraphic.fillRectangle(curX*linkSize, curY*linkSize, linkSize, linkSize, 2);
+      }
+    } else { // not visible
+      theGraphic.fillRectangle(curX*linkSize, curY*linkSize, linkSize, linkSize, 1); // set to black square
+    }
+  } else if (action.compare("downloaded") == 0) { // link just got downloaded, update on td
+    int curX = l.getXCoord();
+    int curY = l.getYCoord();
+    theGraphic.fillRectangle(curX*linkSize, curY*linkSize, linkSize, linkSize, 0);
+  } else if (action.compare("won") == 0) { // link just won a battle, update on td
+    int curX = l.getXCoord();
+    int curY = l.getYCoord();
+    if (l.getData()) { // if is data
+      theGraphic.fillRectangle(curX*linkSize, curY*linkSize, linkSize, linkSize, 3);
+    } else { // if is virus
+      theGraphic.fillRectangle(curX*linkSize, curY*linkSize, linkSize, linkSize, 2);
+    }
+  }
+  // cout << "about to leave notify function" << endl;
 }
 
 GraphicsDisplay::~GraphicsDisplay() {}

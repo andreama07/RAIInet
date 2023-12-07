@@ -130,9 +130,11 @@ int main (int argc, char *argv[]) {
                 if (b.getPlayerTurn() == 1) { // turn is over after a link is moved
                     b.setPlayerTurn(2);
                     cout << "Player 2 Turn!" << endl;
+                    cout << b << endl;
                 } else {
                     b.setPlayerTurn(1);
                     cout << "Player 1 Turn!" << endl;
+                    cout << b << endl;
                 }
             } else if (command == "abilities") {
                 cout << "print out abilities" << endl;

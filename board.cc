@@ -239,22 +239,28 @@ void Board::moveLink(char link, string dir) {
       linkNum = link - 'a';
       mystrength = p1links.at(linkNum).getStrength();
       oppstrength = p2links.at(oppNum).getStrength();
+      p1links.at(linkNum).setVisibility(true);
+      p2links.at(oppNum).setVisibility(true);
       if (mystrength > oppstrength) { // p1 wins battle
+        winningChar = linkNum + 'a';
         download(oppNum + 'A', 1);
-        td->notify(p1links.at(linkNum), "won");
+        td->notify(p1links.at(linkNum), "won", winningChar);
         gd->notify(p1links.at(linkNum), "won");
       } else if (mystrength < oppstrength) { // p2 wins battle
+        winningChar = oppNum + 'A';
         download(linkNum + 'a', 2);
-        td->notify(p2links.at(oppNum), "won");
+        td->notify(p2links.at(oppNum), "won", winningChar);
         gd->notify(p2links.at(oppNum), "won");
       } else { // tie
         if (initiatingPlayer == 1) { // p1 wins battle
+          winningChar = linkNum + 'a';
           download(oppNum + 'A', 1);
-          td->notify(p1links.at(linkNum), "won");
+          td->notify(p1links.at(linkNum), "won", winningChar);
           gd->notify(p1links.at(linkNum), "won");
         } else { // p2 wins battle
+          winningChar = oppNum + 'A';
           download(linkNum + 'a', 2);
-          td->notify(p2links.at(oppNum), "won");
+          td->notify(p2links.at(oppNum), "won", winningChar);
           gd->notify(p2links.at(oppNum), "won");
         }
       }
@@ -263,24 +269,29 @@ void Board::moveLink(char link, string dir) {
       linkNum = link - 'A';
       mystrength = p2links.at(linkNum).getStrength();
       oppstrength = p1links.at(oppNum).getStrength();
-
+      p2links.at(linkNum).setVisibility(true);
+      p1links.at(oppNum).setVisibility(true);
       if (mystrength > oppstrength) { // p2 wins battle
         // download link of p1
+        winningChar = linkNum + 'A';
         download(oppNum + 'a', 2);
-        td->notify(p2links.at(linkNum), "won");
+        td->notify(p2links.at(linkNum), "won", winningChar);
         gd->notify(p2links.at(linkNum), "won");
       } else if (mystrength < oppstrength) { // p1 wins battle
+        winningChar = oppNum + 'a';
         download(linkNum + 'A', 1);
-        td->notify(p2links.at(oppNum), "won");
+        td->notify(p2links.at(oppNum), "won", winningChar);
         gd->notify(p2links.at(oppNum), "won");
       } else { // tie
         if (initiatingPlayer == 2) { // p2 wins battle
+          winningChar = linkNum + 'A';
           download(oppNum + 'a', 2);
-          td->notify(p2links.at(linkNum), "won");
+          td->notify(p2links.at(linkNum), "won", winningChar);
           gd->notify(p2links.at(linkNum), "won");
         } else { // p1 wins battle
+          winningChar = oppNum + 'a';
           download(linkNum + 'A', 1);
-          td->notify(p2links.at(oppNum), "won");
+          td->notify(p2links.at(oppNum), "won", winningChar);
           gd->notify(p2links.at(oppNum), "won");
         }
       }
@@ -372,16 +383,16 @@ bool Board::isValidMove(char link, string dir) const {
   }
   if (dir.compare("up") == 0) {
     x--;
-    cout << "moving up: " << x << ", " << y << endl;
+    // cout << "moving up: " << x << ", " << y << endl;
   } else if (dir.compare("down") == 0) {
     x++;
-    cout << "moving down " << x << ", " << y << endl;
+    // cout << "moving down " << x << ", " << y << endl;
   } else if (dir.compare("left") == 0) {
     y--;
-    cout << "moving left " << x << ", " << y << endl;
+    // cout << "moving left " << x << ", " << y << endl;
   } else if (dir.compare("right") == 0) {
     y++;
-    cout << "moving right " << x << ", " << y << endl;
+    // cout << "moving right " << x << ", " << y << endl;
   }
 
 // check if new position is within the board  
