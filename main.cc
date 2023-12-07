@@ -41,7 +41,6 @@ int main (int argc, char *argv[]) {
     // }
 
     Board b;
-    b.init(xw, 8);
     b.init();
     // setup for the game
     for(int i = 0; i < argc; i++) {
@@ -308,6 +307,38 @@ int main (int argc, char *argv[]) {
                             } // can add more abilities here
                         } else { // player2 turn
                             ab = b.getPlayer(2)->getAbility(ID);
+                             if (ab == 'L') {
+                                cout << "enter link boost" << endl;
+                                // implement link boost
+                                char link;
+                                cin >> link;
+                                b.linkBoost(link, ID);
+                                cout << b << endl;
+                            } else if (ab == 'F') {
+                                cout << "enter firewall" << endl;
+                                //implement firewall
+                            } else if (ab == 'D') {
+                                cout << "enter download" << endl;
+                                //implement download
+                                char link;
+                                cin >> link;
+                                b.download(link, b.getPlayerTurn(), ID); // this returns a bool but we don't need to store it
+                                cout << b << endl;
+                            } else if (ab == 'S') {
+                                cout << "enter scan" << endl;
+                                //implement scan
+                                char link;
+                                cin >> link;
+                                b.scan(link, ID);
+                                cout << b << endl;
+                            } else if (ab == 'P') {
+                                cout << "enter polarize" << endl;
+                                //implement polarize
+                                char link;
+                                cin >> link;
+                                b.polarize(link, ID);
+                                cout << b << endl;
+                            } // can add more abilities here
                         }
                     }
                 }

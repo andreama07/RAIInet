@@ -29,9 +29,7 @@ public:
     ~Board();
 
     // Methods for setting up and managing the board
-    void init(Xwindow &xw, int n); 
     void init();
-    void setGraphicsDisplay(GraphicsDisplay* gd);
     void setData(int playerNum, int linkNum, bool isData);
     void setStrength(int playerNum, int linkNum, int strength);
     void moveLink(char link, std::string dir);

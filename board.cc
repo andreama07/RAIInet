@@ -17,50 +17,14 @@ bool Board::isWithinBounds(int x, int y) const { // this function is done
   return ((x <= boardSize - 1 && x >= 0) && (y <= boardSize - 1 && y >= 0));
 }
 
-void Board::setGraphicsDisplay(GraphicsDisplay* gd) {
-    this->gd = gd;
-}
-
 Board::~Board() { // nothing might actually need to be done here as nothing uses "new"
   p1links.clear();
   p2links.clear();
   boardSize = 0;
-  delete td;
-  delete gd;
-  delete p1;
-  delete p2;
-}
-
-void Board::init(Xwindow &xw, int n) { // initializes board with empty links and attaches textDisplay
-
-  for (int i = 0; i < boardSize; i++) { // sets player 1's 8 links
-    Link link;
-    link.setOwner(1);
-    if (i == 3 || i == 4) {
-      link.setCoords(1, i);
-    } else {
-      link.setCoords(0, i);
-    }
-    p1links.emplace_back(link);
-  }
-  for (int i = 0; i < boardSize; i++) { // sets player 2's 8 links
-    Link link;
-    link.setOwner(2);
-    if (i == 3 || i == 4) {
-      link.setCoords(6, i);
-    } else {
-      link.setCoords(7, i);
-    }
-    p2links.emplace_back(link);
-  }
-  // add observers
-  //td = new TextDisplay();
-  gd = new GraphicsDisplay(xw, 8);
-  // gd = new GraphicDisplay();
-  // add players (used for abilities and stats)
-  p1 = new Player(1); 
-  p2 = new Player(2);
-
+  // delete td;
+  // delete gd;
+  // delete p1;
+  // delete p2;
 }
 
 void Board::init() { // initializes board with empty links and attaches textDisplay
@@ -87,8 +51,7 @@ void Board::init() { // initializes board with empty links and attaches textDisp
   }
   // add observers
   td = new TextDisplay();
-  //gd = new GraphicsDisplay(xw, 8);
-  // gd = new GraphicDisplay();
+  gd = new GraphicsDisplay();
   // add players (used for abilities and stats)
   p1 = new Player(1); 
   p2 = new Player(2);
@@ -277,7 +240,6 @@ void Board::moveLink(char link, string dir) {
       mystrength = p1links.at(linkNum).getStrength();
       oppstrength = p2links.at(oppNum).getStrength();
       if (mystrength > oppstrength) { // p1 wins battle
-<<<<<<< HEAD
         download(oppNum + 'A', 1);
         td->notify(p1links.at(linkNum), "won");
         gd->notify(p1links.at(linkNum), "won");
@@ -294,28 +256,6 @@ void Board::moveLink(char link, string dir) {
           download(linkNum + 'a', 2);
           td->notify(p2links.at(oppNum), "won");
           gd->notify(p2links.at(oppNum), "won");
-=======
-        // cout << "mystrength > oppstrength" << endl;
-        winningChar = linkNum + 'a';
-        download(oppNum + 'A', 1);
-        td->notify(p1links.at(linkNum), "won", winningChar);
-      } else if (mystrength < oppstrength) { // p2 wins battle
-        // cout << "mystrength < oppstrength" << endl;
-        winningChar = oppNum + 'A';
-        download(linkNum + 'a', 2);
-        td->notify(p2links.at(oppNum), "won", winningChar);
-      } else { // tie
-        if (initiatingPlayer == 1) { // p1 wins battle
-          // cout << "tie but i moved" << endl;
-          winningChar = linkNum + 'a';
-          download(oppNum + 'A', 1);
-          td->notify(p1links.at(linkNum), "won", winningChar);
-        } else { // p2 wins battle
-          // cout << "tie but they moved" << endl;
-          winningChar = oppNum + 'A';
-          download(linkNum + 'a', 2);
-          td->notify(p2links.at(oppNum), "won", winningChar);
->>>>>>> c202e418e04561cadcdf13048ee015557b3b69b8
         }
       }
 
@@ -326,7 +266,6 @@ void Board::moveLink(char link, string dir) {
 
       if (mystrength > oppstrength) { // p2 wins battle
         // download link of p1
-<<<<<<< HEAD
         download(oppNum + 'a', 2);
         td->notify(p2links.at(linkNum), "won");
         gd->notify(p2links.at(linkNum), "won");
@@ -343,28 +282,6 @@ void Board::moveLink(char link, string dir) {
           download(linkNum + 'A', 1);
           td->notify(p2links.at(oppNum), "won");
           gd->notify(p2links.at(oppNum), "won");
-=======
-        // cout << "mystrength > oppstrength" << endl;
-        winningChar = linkNum + 'A';
-        download(oppNum + 'a', 2);
-        td->notify(p2links.at(linkNum), "won", winningChar);
-      } else if (mystrength < oppstrength) { // p1 wins battle
-        // cout << "mystrength < oppstrength" << endl;
-        winningChar = oppNum + 'a';
-        download(linkNum + 'A', 1);
-        td->notify(p1links.at(oppNum), "won", winningChar);
-      } else { // tie
-        if (initiatingPlayer == 2) { // p2 wins battle
-          // cout << "tie but i moved" << endl;
-          winningChar = linkNum + 'A';
-          download(oppNum + 'a', 2);
-          td->notify(p2links.at(linkNum), "won", winningChar);
-        } else { // p1 wins battle
-          // cout << "tie but they moved" << endl;
-          winningChar = oppNum + 'a';
-          download(linkNum + 'A', 1);
-          td->notify(p1links.at(oppNum), "won", winningChar);
->>>>>>> c202e418e04561cadcdf13048ee015557b3b69b8
         }
       }
     }
@@ -505,13 +422,10 @@ void Board::download(char link, int player, int abilityID) {
       // download and update player fields + td
       linkNum = link - 'A';
       if (!p2links.at(linkNum).getDownloaded()) { // if not already downloaded
-        cout << "not already downloaded" << endl;
         p2links.at(linkNum).setDownloaded(true); // download
-        cout << "before setting coords" << endl;
-        p2links.at(linkNum).setCoords(-1, -1); // set coords off board
-        cout << "after setting coords" << endl;
         td->notify(p2links.at(linkNum), "downloaded"); // notify text display (will change to a dot)
-        cout << "after notify" << endl;
+        gd->notify(p2links.at(linkNum), "downloaded"); // notify graphics display (will change to a white square)
+        p2links.at(linkNum).setCoords(-1, -1); // set coords off board
         if (p2links.at(linkNum).getData()) { // if the downloaded link is a data
           cout << "gonna download data" << endl;
           if (player == 1) { // p1 downloads the data
@@ -543,9 +457,9 @@ void Board::download(char link, int player, int abilityID) {
       linkNum = link - 'a';
       if (!p1links.at(linkNum).getDownloaded()) { // if not already downloaded
         p1links.at(linkNum).setDownloaded(true); // download
-        p1links.at(linkNum).setCoords(-1, -1); // set coords off board
         td->notify(p1links.at(linkNum), "downloaded"); // notify text display (will change to a dot)
         gd->notify(p1links.at(linkNum), "downloaded"); 
+        p1links.at(linkNum).setCoords(-1, -1); // set coords off board
         if (p1links.at(linkNum).getData()) { // if the downloaded link is a data
           if (player == 1) { // p1 downloads the data
             p1->incrementDownloadedData();
